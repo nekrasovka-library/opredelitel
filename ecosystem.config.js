@@ -2,26 +2,27 @@ module.exports = {
   apps: [
     {
       name: "opredelitel",
-      script: "/backend/src/server.js",
+      script: "./src/server.js",
+      cwd: "./backend",
       env_production: {
         NODE_ENV: "production",
-        NODE_PATH: "production",
-        REACT_APP_URL: "https://opredelitel.ru",
+        PORT: 3012,
+        REACT_APP_API_URL: "https://opredelitel.ru",
       },
     },
   ],
   deploy: {
     prod: {
       user: "superuser",
-      host: "10.10.1.65",
-      ref: "origin/PRO-43",
+      host: "10.10.0.37",
+      ref: "origin/master",
       repo: "git@github.com:nekrasovka-library/opredelitel.git",
       path: "/var/www/opredelitel",
-      "post-deploy":
-        "npm i && npm run build && npm run production && pm2 reload ecosystem.config.js --env production",
-      env: {
-        PORT: 3012,
-      },
+      "post-deploy": `
+        cd frontend && npm install && npm run build && cd .. &&
+        cd backend && npm install && pm2 reload ecosystem.config.js --env production
+      `,
+      env: { PORT: 3012 },
     },
   },
 };
