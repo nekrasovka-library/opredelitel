@@ -1,19 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ImageStyles } from "./image.styles";
 
-const BlockImage = ({ imageUrl, className }) => {
+const Image = ({ imageUrl, className }) => {
   const blockRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [loadingAbortController, setLoadingAbortController] = useState(null);
-  const VISIBILITY_THRESHOLD = 0.1; // Уровень видимости для срабатывания
+  const [isVisible, setIsVisible] = useState(false); // Видимость компонента
+  const [imageLoaded, setImageLoaded] = useState(false); // Флаг, загружено ли изображение
+  const [imageBlob, setImageBlob] = useState(null); // Blob URL для отображения изображения
+  const [loadingAbortController, setLoadingAbortController] = useState(null); // AbortController
+  const VISIBILITY_THRESHOLD = 0.1; // Уровень видимости
 
   const createObserver = () =>
     new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          setIsVisible(entry.isIntersecting); // Устанавливаем видимость
-        });
+        entries.forEach((entry) => setIsVisible(entry.isIntersecting));
       },
       { threshold: VISIBILITY_THRESHOLD },
     );
@@ -29,39 +28,60 @@ const BlockImage = ({ imageUrl, className }) => {
 
   useEffect(() => {
     if (isVisible && !imageLoaded) {
-      // Если компонент в зоне видимости, начинаем загрузку изображения
+      // Если изображение становится видимым и еще не загружено
       const abortController = new AbortController();
       setLoadingAbortController(abortController);
 
-      const img = new Image();
-      img.src = imageUrl;
-      img.onload = () => {
-        setImageLoaded(true); // Устанавливаем статус загруженного изображения
-        setLoadingAbortController(null);
-      };
-      img.onerror = () => {
-        // Управляем ошибками загрузки (например, сбрасываем состояние)
-        setImageLoaded(false);
-        setLoadingAbortController(null);
-      };
+      // Используем fetch для загрузки изображения
+      fetch(imageUrl, { signal: abortController.signal })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Ошибка загрузки изображения");
+          }
+          return response.blob(); // Преобразуем ответ в blob
+        })
+        .then((blob) => {
+          const blobUrl = URL.createObjectURL(blob);
+          setImageBlob(blobUrl); // Устанавливаем URL загруженного blob
+          setImageLoaded(true);
+          setLoadingAbortController(null); // Очищаем AbortController
+        })
+        .catch((error) => {
+          if (error.name === "AbortError") {
+            console.log("Загрузка изображения прервана");
+          } else {
+            console.error("Ошибка загрузки:", error);
+          }
+          setLoadingAbortController(null);
+        });
 
       return () => {
-        // Если компонент уходит из видимости, прерываем загрузку
-        abortController.abort();
+        if (abortController) {
+          // Прерываем загрузку, если компонент уходит из зоны видимости
+          abortController.abort();
+        }
       };
     } else if (!isVisible && loadingAbortController) {
-      // Если компонент ушел из зоны видимости и загрузка идет, прерываем процесс
+      // Если компонент выходит из зоны видимости, прерываем загрузку
       loadingAbortController.abort();
       setLoadingAbortController(null);
     }
   }, [isVisible]);
 
+  useEffect(() => {
+    return () => {
+      if (imageBlob) {
+        URL.revokeObjectURL(imageBlob);
+        setImageBlob(null);
+      }
+    };
+  }, [imageBlob]);
+
   return (
     <ImageStyles
-      isVisible={isVisible}
       className={className}
       ref={blockRef}
-      imageUrl={isVisible && imageLoaded ? `url(${imageUrl})` : "none"}
+      imageUrl={imageBlob ? `url(${imageBlob})` : "none"}
     >
       <div>
         <div />
@@ -70,4 +90,4 @@ const BlockImage = ({ imageUrl, className }) => {
   );
 };
 
-export default BlockImage;
+export default Image;
