@@ -17,8 +17,8 @@ module.exports = {
       repo: "git@github.com:nekrasovka-library/opredelitel.git",
       path: "/var/www/team.test.nekrasovka.ru",
       "post-deploy": `
-        cd ../frontend && npm install && npm run build && cd ../backend &&
-        npm install && pm2 reload ecosystem.config.js --env production
+        cd .. && cd frontend && npm install && npm run build && 
+        cd .. && cd backend && npm install && pm2 reload ecosystem.config.js --env production
       `,
       env: {
         NODE_ENV: "production",
