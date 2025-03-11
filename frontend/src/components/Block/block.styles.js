@@ -7,10 +7,9 @@ const BlockImage = styled(Image)`
     position: absolute;
     > div {
       position: fixed;
+      ${({ isVisible }) => !isVisible && "display: none;"};
     }
   }
-
-  ${({ isVisible }) => !isVisible && "display: none;"};
 `;
 
 const BlockStyles = styled.div`
