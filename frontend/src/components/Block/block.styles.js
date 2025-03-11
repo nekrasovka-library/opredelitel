@@ -3,8 +3,14 @@ import Image from "../Image";
 import { RectangularButton } from "../Button/button.styles";
 
 const BlockImage = styled(Image)`
-  ${({ isVisible }) =>
-    isVisible && `> div {position: absolute; > div {position: fixed;}}`};
+  > div {
+    position: absolute;
+    > div {
+      position: fixed;
+    }
+  }
+
+  ${({ isVisible }) => !isVisible && "display: none;"};
 `;
 
 const BlockStyles = styled.div`
