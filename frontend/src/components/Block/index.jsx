@@ -21,72 +21,63 @@ const Block = ({ item, id, onVisibilityChange, isVisible }) => {
   const { paperSelected, setPaperSelected, isIntersected, setIsIntersected } =
     useContext(OpredelitelContext);
   const [currentIndex, setCurrentIndex] = useState(null);
-  const blockRef = useRef(null); // Реф для отслеживания элемента
+  const blockRef = useRef(null);
 
-  const openImage = (index) => {
-    setCurrentIndex(index);
-  };
+  const API_URL = process.env.REACT_APP_API_URL;
+  const VISIBILITY_THRESHOLD = 0;
 
-  const closeModal = () => {
-    setCurrentIndex(null);
-  };
+  const openImage = (index) => setCurrentIndex(index);
+  const resetCurrentIndex = () => setCurrentIndex(null);
 
-  const handlePrev = () => {
+  const showPreviousImage = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? item.images.length - 1 : prevIndex - 1,
     );
   };
 
-  const handleNext = () => {
+  const showNextImage = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === item.images.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
-  const handlePaperSelected = () => {
+  const togglePaperSelection = () => {
     setIsIntersected(false);
     setPaperSelected(id === paperSelected ? "" : id);
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
+  const createObserver = () =>
+    new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          // Если блок в видимости, передаем true, иначе false
-          onVisibilityChange(entry.isIntersecting);
-        });
+        entries.forEach((entry) => onVisibilityChange(entry.isIntersecting));
       },
-      {
-        threshold: 0.1, // Минимальная доля видимости для срабатывания (10%)
-      },
+      { rootMargin: "200px", threshold: VISIBILITY_THRESHOLD },
     );
 
-    if (blockRef.current) {
-      observer.observe(blockRef.current);
-    }
+  useEffect(() => {
+    const observer = createObserver();
+    if (blockRef.current) observer.observe(blockRef.current);
 
     return () => {
-      // Чистим наблюдателя при размонтировании
-      if (blockRef.current) {
-        observer.unobserve(blockRef.current);
-      }
+      if (blockRef.current) observer.unobserve(blockRef.current);
     };
   }, []);
 
   return (
     <BlockStyles id={id} ref={blockRef}>
       <BlockImage
-        imageUrl={`${process.env.REACT_APP_API_URL}/images/${item.album}`}
+        imageUrl={`${API_URL}/images/${item.album}`}
         isVisible={isVisible}
       />
       <Liner linerHeight={30} borderColor={item.color} />
       <BlockRectangularButton
         borderColor={item.color}
-        onClick={handlePaperSelected}
+        onClick={togglePaperSelection}
       >
         {item.name}
       </BlockRectangularButton>
-      {paperSelected === id && isIntersected ? (
+
+      {paperSelected === id && isIntersected && (
         <BlockHidden>
           <BlockDescription>
             <div dangerouslySetInnerHTML={{ __html: item.text }} />
@@ -94,19 +85,19 @@ const Block = ({ item, id, onVisibilityChange, isVisible }) => {
           <MasonryGrid images={item.images} openImage={openImage} />
           {currentIndex !== null && (
             <Modal>
-              <CloseButton onClick={closeModal}>
+              <CloseButton onClick={resetCurrentIndex}>
                 <Icon icon="close" height={20} fill="#000" />
               </CloseButton>
-              <ArrowButtonLeft onClick={handlePrev}>
+              <ArrowButtonLeft onClick={showPreviousImage}>
                 <Icon icon="arrowLeft" height={20} width={20} fill="#000" />
               </ArrowButtonLeft>
-              <ArrowButtonRight onClick={handleNext}>
+              <ArrowButtonRight onClick={showNextImage}>
                 <Icon icon="arrowRight" height={20} width={20} fill="#000" />
               </ArrowButtonRight>
               <ImageContainer>
                 <ProgressiveImage
-                  smallSrc={`${process.env.REACT_APP_API_URL}/api/optimized-images/${item.images[currentIndex].dataset.original}`}
-                  largeSrc={`${process.env.REACT_APP_API_URL}/images/${item.images[currentIndex].dataset.original}`}
+                  smallSrc={`${API_URL}/api/optimized-images/${item.images[currentIndex].dataset.original}`}
+                  largeSrc={`${API_URL}/images/${item.images[currentIndex].dataset.original}`}
                   alt={item.images[currentIndex].name}
                 />
                 <span>{item.images[currentIndex].name}</span>
@@ -114,7 +105,7 @@ const Block = ({ item, id, onVisibilityChange, isVisible }) => {
             </Modal>
           )}
         </BlockHidden>
-      ) : null}
+      )}
     </BlockStyles>
   );
 };
