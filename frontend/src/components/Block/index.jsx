@@ -51,7 +51,7 @@ const Block = ({ item, id, onVisibilityChange, isVisible }) => {
       (entries) => {
         entries.forEach((entry) => onVisibilityChange(entry.isIntersecting));
       },
-      { rootMargin: "200px", threshold: VISIBILITY_THRESHOLD },
+      { rootMargin: "300px", threshold: VISIBILITY_THRESHOLD },
     );
 
   useEffect(() => {
