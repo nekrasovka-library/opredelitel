@@ -5,7 +5,7 @@ const { Worker } = require("worker_threads"); // Подключение мног
 const router = Router();
 const { join } = require("path");
 
-const CACHE_PATH = path.join(__dirname, "cache"); // Кэш обработанных изображений
+const CACHE_PATH = path.join(__dirname, ".cache"); // Кэш обработанных изображений
 
 if (!fs.existsSync(CACHE_PATH)) {
   fs.mkdirSync(CACHE_PATH, { recursive: true }); // Создаем папку для кэша, если её нет
@@ -36,7 +36,7 @@ router.get("/optimized-images/:imageName", (req, res) => {
   // Флаг, чтобы исключить несколько вызовов res.send
   let responseSent = false;
 
-  worker.on("message", (msg) => {
+  worker.on("message", () => {
     if (!responseSent) {
       responseSent = true; // Устанавливаем флаг
       res.set("Content-Type", "image/webp");
