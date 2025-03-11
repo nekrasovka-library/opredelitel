@@ -10,7 +10,7 @@ module.exports = {
     },
   ],
   deploy: {
-    prod: {
+    production: {
       user: "superuser",
       host: "10.10.0.37",
       ref: "origin/master",
