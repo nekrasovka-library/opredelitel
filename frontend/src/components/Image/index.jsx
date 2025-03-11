@@ -61,7 +61,7 @@ const BlockImage = ({ imageUrl, className }) => {
       isVisible={isVisible}
       className={className}
       ref={blockRef}
-      imageUrl={imageLoaded ? `url(${imageUrl})` : "none"}
+      imageUrl={isVisible && imageLoaded ? `url(${imageUrl})` : "none"}
     >
       <div>
         <div />
