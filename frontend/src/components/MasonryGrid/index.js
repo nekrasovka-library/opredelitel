@@ -84,8 +84,8 @@ const MasonryGrid = ({ images, openImage }) => {
   };
 
   return (
-    <BlockImages style={{ visibility: "hidden" }}>
-      <div className="grid">
+    <BlockImages>
+      <div className="grid" style={{ visibility: "hidden" }}>
         {images.map((image, index) => (
           <div
             className="grid-item"

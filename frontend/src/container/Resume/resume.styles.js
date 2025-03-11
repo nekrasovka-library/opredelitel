@@ -6,7 +6,6 @@ const ResumeStyles = styled.div`
   margin-top: 45px;
   border-top: 2px solid #000000;
   border-bottom: 2px solid #000000;
-  width: 100%;
   background-color: #f2f1ed;
 
   > div {
