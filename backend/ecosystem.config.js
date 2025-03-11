@@ -5,7 +5,7 @@ module.exports = {
       script: "./src/server.js",
       env_production: {
         NODE_ENV: "production",
-        PORT: 3012,
+        PORT: 3001,
       },
     },
   ],
@@ -15,14 +15,14 @@ module.exports = {
       host: "10.10.0.37",
       ref: "origin/master",
       repo: "git@github.com:nekrasovka-library/opredelitel.git",
-      path: "/var/www/opredelitel",
+      path: "/var/www/team.test.nekrasovka.ru",
       "post-deploy": `
         cd ../frontend && npm install && npm run build && cd ../backend &&
         npm install && pm2 reload ecosystem.config.js --env production
       `,
       env: {
         NODE_ENV: "production",
-        PORT: 3012,
+        PORT: 3001,
       },
     },
   },
