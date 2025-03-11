@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import Liner from "../Liner";
 import {
   ArrowButtonLeft,
   ArrowButtonRight,
   BlockDescription,
   BlockHidden,
-  BlockImage,
   BlockRectangularButton,
   BlockStyles,
   CloseButton,
@@ -16,15 +15,14 @@ import { OpredelitelContext } from "../../context";
 import Icon from "../Icon";
 import MasonryGrid from "../MasonryGrid";
 import ProgressiveImage from "../ProgressiveImage";
+import BlockImage from "../../components/Image";
 
-const Block = ({ item, id, onVisibilityChange, isVisible }) => {
+const Block = ({ item, id }) => {
   const { paperSelected, setPaperSelected, isIntersected, setIsIntersected } =
     useContext(OpredelitelContext);
   const [currentIndex, setCurrentIndex] = useState(null);
-  const blockRef = useRef(null);
 
   const API_URL = process.env.REACT_APP_API_URL;
-  const VISIBILITY_THRESHOLD = 0;
 
   const openImage = (index) => setCurrentIndex(index);
   const resetCurrentIndex = () => setCurrentIndex(null);
@@ -46,29 +44,9 @@ const Block = ({ item, id, onVisibilityChange, isVisible }) => {
     setPaperSelected(id === paperSelected ? "" : id);
   };
 
-  const createObserver = () =>
-    new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => onVisibilityChange(entry.isIntersecting));
-      },
-      { rootMargin: "300px", threshold: VISIBILITY_THRESHOLD },
-    );
-
-  useEffect(() => {
-    const observer = createObserver();
-    if (blockRef.current) observer.observe(blockRef.current);
-
-    return () => {
-      if (blockRef.current) observer.unobserve(blockRef.current);
-    };
-  }, []);
-
   return (
-    <BlockStyles id={id} ref={blockRef}>
-      <BlockImage
-        imageUrl={`${API_URL}/images/${item.album}`}
-        isVisible={isVisible}
-      />
+    <BlockStyles id={id}>
+      <BlockImage imageUrl={`${API_URL}/images/${item.album}`} />
       <Liner linerHeight={30} borderColor={item.color} />
       <BlockRectangularButton
         borderColor={item.color}

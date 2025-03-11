@@ -7,20 +7,20 @@ const ImageStyles = styled.div`
   > div {
     width: 100%;
     height: 100%;
-
+    position: absolute;
     top: 0;
     left: 0;
     clip-path: inset(0 0 0 0);
     z-index: 1;
 
     > div {
-      display: block;
+      position: ${({ isVisible }) => (isVisible ? "fixed" : "initial")};
       width: 100%;
       height: 100%;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      background-image: url(${({ imageUrl }) => imageUrl});
+      background-image: ${({ imageUrl }) => imageUrl};
       transform: translateZ(0);
       will-change: transform;
       pointer-events: none;

@@ -1,16 +1,5 @@
 import styled from "styled-components";
-import Image from "../Image";
 import { RectangularButton } from "../Button/button.styles";
-
-const BlockImage = styled(Image)`
-  > div {
-    position: absolute;
-    > div {
-      position: fixed;
-      ${({ isVisible }) => !isVisible && "display: none;"};
-    }
-  }
-`;
 
 const BlockStyles = styled.div`
   display: flex;
@@ -159,7 +148,6 @@ export {
   BlockStyles,
   BlockDescription,
   BlockHidden,
-  BlockImage,
   ArrowButton,
   Modal,
   CloseButton,

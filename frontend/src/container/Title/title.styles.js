@@ -1,14 +1,4 @@
 import styled from "styled-components";
-import Image from "../../components/Image";
-
-const TitleImage = styled(Image)`
-  > div {
-    position: absolute;
-    > div {
-      position: fixed;
-    }
-  }
-`;
 
 const TitleStyles = styled.div`
   position: relative;
@@ -74,4 +64,4 @@ const TitleStyles = styled.div`
   }
 `;
 
-export { TitleStyles, TitleImage };
+export { TitleStyles };
