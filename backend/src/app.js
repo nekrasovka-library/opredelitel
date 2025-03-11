@@ -6,6 +6,7 @@ const { join } = require("node:path");
 const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
+
 app.use("/api", router);
 app.use("/images", express.static(join(__dirname, "../../images")));
 
