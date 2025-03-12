@@ -70,11 +70,7 @@ const Block = ({ item, id }) => {
                 <Icon icon="arrowRight" height={20} width={20} fill="#000" />
               </ArrowButtonRight>
               <FullscreenWrapper>
-                <ImagesContainer
-                  style={{
-                    transform: `translateX(-${currentIndex * 100}%)`, // Сдвигаем контейнер на основу текущего индекса
-                  }}
-                >
+                <ImagesContainer currentIndex={currentIndex}>
                   {item.images.map((image, index) => {
                     return (
                       <ImageContainer key={index}>

@@ -65,7 +65,7 @@ const FullscreenWrapper = styled.div`
 const FullscreenImage = styled.img`
   @media (min-width: 641px) {
     height: 90vh;
-    max-width: 90%;
+    width: auto;
   }
 
   @media (max-width: 640px) {
@@ -77,6 +77,7 @@ const FullscreenImage = styled.img`
 const ImagesContainer = styled.div`
   display: flex;
   width: 100%;
+  transform: translateX(-${({ currentIndex }) => currentIndex * 100}%);
   transition: transform 0.5s ease-in-out;
 
   @media (max-width: 640px) {
