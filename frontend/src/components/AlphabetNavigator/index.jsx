@@ -12,18 +12,13 @@ import { useIsMobile } from "../../helpers";
 import { listData } from "../../context/data";
 
 const Alphabet = () => {
-  const {
-    paperSelected,
-    setPaperSelected,
-    setIsIntersected,
-    isANVisible,
-    setIsANVisible,
-  } = useContext(OpredelitelContext);
+  const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
   const isMobile = useIsMobile(640);
   const navigationRef = useRef(null);
   const { paperType } = useContext(OpredelitelContext);
   const [data, setData] = useState({});
   const [hoveredLetter, setHoveredLetter] = useState(null); // Состояние для текущей буквы, на которую навели
+  const [isANVisible, setIsANVisible] = useState(false);
 
   const getElementPosition = (id) => {
     const element = document.getElementById(`${id}`);
@@ -34,7 +29,6 @@ const Alphabet = () => {
   };
 
   const scrollToElement = (id) => {
-    setIsIntersected(true);
     const top = getElementPosition(id);
 
     window.scrollTo({
@@ -44,7 +38,6 @@ const Alphabet = () => {
   };
 
   const handlePaperSelected = (id) => {
-    setIsIntersected(false);
     setPaperSelected(id === paperSelected ? "" : id);
   };
 

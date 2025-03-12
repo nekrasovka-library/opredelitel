@@ -18,10 +18,8 @@ import ProgressiveImage from "../ProgressiveImage";
 import BlockImage from "../../components/Image";
 
 const Block = ({ item, id }) => {
-  const { paperSelected, setPaperSelected, isIntersected, setIsIntersected } =
-    useContext(OpredelitelContext);
+  const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
   const [currentIndex, setCurrentIndex] = useState(null);
-
   const API_URL = process.env.REACT_APP_API_URL;
 
   const openImage = (index) => setCurrentIndex(index);
@@ -40,13 +38,12 @@ const Block = ({ item, id }) => {
   };
 
   const togglePaperSelection = () => {
-    setIsIntersected(false);
     setPaperSelected(id === paperSelected ? "" : id);
   };
 
   return (
     <BlockStyles id={id}>
-      <BlockImage imageUrl={`${API_URL}/images/${item.album}`} />
+      <BlockImage imageUrl={item.album} />
       <Liner linerHeight={30} borderColor={item.color} />
       <BlockRectangularButton
         borderColor={item.color}
@@ -54,8 +51,7 @@ const Block = ({ item, id }) => {
       >
         {item.name}
       </BlockRectangularButton>
-
-      {paperSelected === id && isIntersected && (
+      {paperSelected === id && (
         <BlockHidden>
           <BlockDescription>
             <div dangerouslySetInnerHTML={{ __html: item.text }} />
@@ -74,7 +70,7 @@ const Block = ({ item, id }) => {
               </ArrowButtonRight>
               <ImageContainer>
                 <ProgressiveImage
-                  smallSrc={`${API_URL}/api/optimized-images/${item.images[currentIndex].dataset.original}`}
+                  smallSrc={`${API_URL}/api/optimized-images/250/${item.images[currentIndex].dataset.original}`}
                   largeSrc={`${API_URL}/images/${item.images[currentIndex].dataset.original}`}
                   alt={item.images[currentIndex].name}
                 />

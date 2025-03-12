@@ -94,7 +94,7 @@ const MasonryGrid = ({ images, openImage }) => {
           >
             <img
               loading="lazy"
-              src={`${process.env.REACT_APP_API_URL}/api/optimized-images/${image.dataset.original}`}
+              src={`${process.env.REACT_APP_API_URL}/api/optimized-images/250/${image.dataset.original}`}
               alt={image.name}
             />
           </div>

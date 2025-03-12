@@ -12,6 +12,10 @@ const ImageStyles = styled.div`
     left: 0;
     clip-path: inset(0 0 0 0);
     z-index: 1;
+    background-image: url("${({ imageUrl }) => imageUrl}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 
     > div {
       position: ${({ isVisible }) => (isVisible ? "fixed" : "initial")};
@@ -20,9 +24,6 @@ const ImageStyles = styled.div`
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      background-image: ${({ imageUrl }) => imageUrl};
-      transform: translateZ(0);
-      will-change: transform;
       pointer-events: none;
 
       top: 0;

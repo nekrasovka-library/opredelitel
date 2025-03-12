@@ -7,8 +7,6 @@ export const OpredelitelContext = createContext();
 export const OpredelitelProvider = ({ children }) => {
   const [paperType, setPaperType] = useState(1);
   const [paperSelected, setPaperSelected] = useState("");
-  const [isIntersected, setIsIntersected] = useState(false);
-  const [isANVisible, setIsANVisible] = useState(false);
 
   return (
     <OpredelitelContext.Provider
@@ -17,10 +15,6 @@ export const OpredelitelProvider = ({ children }) => {
         setPaperType,
         paperSelected,
         setPaperSelected,
-        isIntersected,
-        setIsIntersected,
-        isANVisible,
-        setIsANVisible,
       }}
     >
       {children}
