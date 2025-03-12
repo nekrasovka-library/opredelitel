@@ -5,25 +5,24 @@ const BlockImages = styled.div`
   height: 100%;
   width: 100%;
 
-  /* Основная сетка */
-  .grid {
+  > div {
     display: flex;
     gap: 15px;
     height: 100%;
     padding: 0 20px;
-  }
 
-  .grid-item {
-    background: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: zoom-in;
-    max-height: 250px;
+    > div {
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-in;
+      max-height: 250px;
 
-    img {
-      display: block;
-      height: 100%;
+      img {
+        display: block;
+        height: 100%;
+      }
     }
   }
 `;

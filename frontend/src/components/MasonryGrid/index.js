@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { BlockImages } from "./masonry.styles";
 import imagesLoaded from "imagesloaded";
 
@@ -6,6 +6,8 @@ import imagesLoaded from "imagesloaded";
 const GRID_MAX_WIDTH = 1200;
 
 const MasonryGrid = ({ images, openImage }) => {
+  const gridRef = useRef(null);
+
   useEffect(() => {
     const getGridStyles = (gridElement) => {
       const computedStyle = window.getComputedStyle(gridElement);
@@ -29,7 +31,9 @@ const MasonryGrid = ({ images, openImage }) => {
     };
 
     const resizeGrid = () => {
-      const gridElement = document.querySelector(".grid");
+      const gridElement = gridRef.current;
+      if (!gridElement) return;
+
       const imageElements = Array.from(gridElement.querySelectorAll("img"));
       const { paddingLeft, paddingRight, gap } = getGridStyles(gridElement);
       const totalOffset = paddingLeft + paddingRight;
@@ -85,13 +89,9 @@ const MasonryGrid = ({ images, openImage }) => {
 
   return (
     <BlockImages>
-      <div className="grid" style={{ visibility: "hidden" }}>
+      <div ref={gridRef}>
         {images.map((image, index) => (
-          <div
-            className="grid-item"
-            key={index}
-            onClick={() => openImage(index)}
-          >
+          <div key={index} onClick={() => openImage(index)}>
             <img
               loading="lazy"
               src={`${process.env.REACT_APP_API_URL}/api/optimized-images/250/${image.dataset.original}`}
