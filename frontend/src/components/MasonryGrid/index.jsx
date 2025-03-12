@@ -18,11 +18,11 @@ const MasonryGrid = ({ images, openImage }) => {
       };
     };
 
-    const initializeGrid = (gridElement, widths, groupedWidths) => {
+    const initializeGrid = (gridElement, el, groupedWidths) => {
       gridElement.style.flexWrap = "wrap";
       gridElement.style.visibility = "visible";
       groupedWidths.flat().forEach((width, index) => {
-        widths[index].style.width = `${width}px`;
+        el[index].img.style.width = `${width}px`;
       });
     };
 
@@ -34,14 +34,15 @@ const MasonryGrid = ({ images, openImage }) => {
       const gridElement = gridRef.current;
       if (!gridElement) return;
 
-      const imageElements = Array.from(gridElement.querySelectorAll("img"));
       const { paddingLeft, paddingRight, gap } = getGridStyles(gridElement);
       const totalOffset = paddingLeft + paddingRight;
       const width = window.innerWidth;
       const targetWidth = Math.min(width, GRID_MAX_WIDTH) - totalOffset;
+      const imgLoad = imagesLoaded(gridElement);
 
-      imagesLoaded(gridElement, () => {
-        const imageWidths = imageElements.map((img) => img.offsetWidth);
+      imgLoad.on("done", function () {
+        const imageElements = imgLoad.images;
+        const imageWidths = imageElements.map((img) => img.img.offsetWidth);
         const groupedWidths = groupImagesByWidth(gap, imageWidths, targetWidth);
         updateGridWidth(gridElement, targetWidth);
         initializeGrid(gridElement, imageElements, groupedWidths);
@@ -60,6 +61,7 @@ const MasonryGrid = ({ images, openImage }) => {
       group.reduce((sum, width) => sum + width, 0) + totalGaps;
     const widthDifference = currentTotalWidth - targetWidth;
     const correctionFactor = widthDifference / group.length;
+
     return group.map((width) => width - Math.max(correctionFactor, 0));
   };
 
@@ -89,11 +91,10 @@ const MasonryGrid = ({ images, openImage }) => {
 
   return (
     <BlockImages>
-      <div ref={gridRef}>
+      <div ref={gridRef} style={{ visibility: "hidden" }}>
         {images.map((image, index) => (
           <div key={index} onClick={() => openImage(index)}>
             <img
-              loading="lazy"
               src={`${process.env.REACT_APP_API_URL}/api/optimized-images/250/${image.dataset.original}`}
               alt={image.name}
             />
