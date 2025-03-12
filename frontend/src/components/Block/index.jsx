@@ -57,7 +57,7 @@ const Block = ({ item, id }) => {
       >
         {item.name}
       </BlockRectangularButton>
-      {paperSelected === id && isIntersected && (
+      {paperSelected === id && (
         <BlockHidden>
           <BlockDescription>
             <div dangerouslySetInnerHTML={{ __html: item.text }} />
