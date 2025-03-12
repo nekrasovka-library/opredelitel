@@ -22,6 +22,7 @@ import BlockImage from "../../components/Image";
 const Block = ({ item, id }) => {
   const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
   const [currentIndex, setCurrentIndex] = useState(null);
+  const [isIntersected, setIsIntersected] = useState(false);
 
   const openImage = (index) => setCurrentIndex(index);
   const resetCurrentIndex = () => setCurrentIndex(null);
@@ -44,7 +45,11 @@ const Block = ({ item, id }) => {
 
   return (
     <BlockStyles id={id}>
-      <BlockImage imageUrl={item.album} />
+      <BlockImage
+        imageUrl={item.album}
+        isIntersected={isIntersected}
+        setIsIntersected={setIsIntersected}
+      />
       <Liner linerHeight={30} borderColor={item.color} />
       <BlockRectangularButton
         borderColor={item.color}
@@ -52,7 +57,7 @@ const Block = ({ item, id }) => {
       >
         {item.name}
       </BlockRectangularButton>
-      {paperSelected === id && (
+      {paperSelected === id && isIntersected && (
         <BlockHidden>
           <BlockDescription>
             <div dangerouslySetInnerHTML={{ __html: item.text }} />

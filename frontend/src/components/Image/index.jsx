@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ImageStyles } from "./image.styles";
 
-const Image = ({ imageUrl, className }) => {
+const Image = ({ imageUrl, className, isIntersected, setIsIntersected }) => {
   const API_URL = process.env.REACT_APP_API_URL;
   const DEFAULT_IMAGE = `${API_URL}/api/optimized-images/20/${imageUrl}`;
   const LARGE_IMAGE = `${API_URL}/images/${imageUrl}`;
   const blockRef = useRef(null); // Ссылка на HTML-элемент
   const [isFullImageLoaded, setIsFullImageLoaded] = useState(false); // Флаг завершённой загрузки изображения (чтобы не грузить снова)
-  const [isIntersected, setIsIntersected] = useState(false);
   const visibilityTimerRef = useRef(null); // Таймер на 200 мс
 
   const loadImage = () => {
@@ -22,6 +21,8 @@ const Image = ({ imageUrl, className }) => {
   };
 
   useEffect(() => {
+    const currentBlockRef = blockRef.current;
+
     // Создаём Observer для отслеживания видимости
     const observer = new IntersectionObserver(
       (entries) => {
@@ -40,13 +41,13 @@ const Image = ({ imageUrl, className }) => {
     );
 
     if (blockRef.current) {
-      observer.observe(blockRef.current);
+      observer.observe(currentBlockRef);
     }
 
     return () => {
       // Чистим observer и таймер при размонтировании
-      if (blockRef.current) {
-        observer.unobserve(blockRef.current);
+      if (currentBlockRef) {
+        observer.unobserve(currentBlockRef);
       }
 
       clearTimeout(visibilityTimerRef.current);
