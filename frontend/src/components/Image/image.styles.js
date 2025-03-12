@@ -12,22 +12,21 @@ const ImageStyles = styled.div`
     left: 0;
     clip-path: inset(0 0 0 0);
     z-index: 1;
-    background-image: url("${({ imageUrl }) => imageUrl}");
+    background-image: ${({ imageUrl }) => imageUrl};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
 
     > div {
-      position: ${({ isVisible }) => (isVisible ? "fixed" : "initial")};
       width: 100%;
       height: 100%;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      pointer-events: none;
-
-      top: 0;
-      left: 0;
+      ${({ isIntersected }) =>
+        isIntersected
+          ? "position: fixed; top: 0; left: 0;"
+          : "position: initial"};
     }
   }
 

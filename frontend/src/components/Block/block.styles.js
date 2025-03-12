@@ -56,13 +56,24 @@ const Modal = styled.div`
   }
 `;
 
+const ImagesContainer = styled.div`
+  display: flex;
+  width: 100%;
+  transition: transform 0.5s ease-in-out;
+
+  @media (max-width: 640px) {
+    height: 100%;
+  }
+`;
+
 const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 15px;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  flex: 0 0 100%;
+  text-align: center;
 
   @media (max-width: 640px) {
     span {
@@ -82,6 +93,7 @@ const ArrowButton = styled.button`
   cursor: pointer;
   margin: 0;
   outline: none;
+  z-index: 100;
 
   @media (min-width: 641px) {
     background: none;
@@ -128,12 +140,13 @@ const ArrowButtonRight = styled(ArrowButton)`
 
 const FullscreenImage = styled.img`
   @media (min-width: 641px) {
-    height: 90%;
+    max-height: 90vh;
+    max-width: 90%;
   }
 
   @media (max-width: 640px) {
     width: 100%;
-    max-height: 100%;
+    height: auto;
   }
 `;
 
@@ -156,4 +169,5 @@ export {
   ArrowButtonRight,
   ArrowButtonLeft,
   BlockRectangularButton,
+  ImagesContainer,
 };

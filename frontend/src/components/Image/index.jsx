@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { ImageStyles } from "./image.styles";
 
 const Image = ({ imageUrl, className }) => {
-  const DEFAULT_IMAGE = `${process.env.REACT_APP_API_URL}/api/optimized-images/20/${imageUrl}`;
-  const LARGE_IMAGE = `${process.env.REACT_APP_API_URL}/images/${imageUrl}`;
+  const API_URL = process.env.REACT_APP_API_URL;
+  const DEFAULT_IMAGE = `${API_URL}/api/optimized-images/20/${imageUrl}`;
+  const LARGE_IMAGE = `${API_URL}/images/${imageUrl}`;
   const blockRef = useRef(null); // Ссылка на HTML-элемент
   const [isFullImageLoaded, setIsFullImageLoaded] = useState(false); // Флаг завершённой загрузки изображения (чтобы не грузить снова)
+  const [isIntersected, setIsIntersected] = useState(false);
   const visibilityTimerRef = useRef(null); // Таймер на 200 мс
 
   const loadImage = () => {
@@ -24,17 +26,15 @@ const Image = ({ imageUrl, className }) => {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
+        setIsIntersected(entry.isIntersecting);
+
         if (entry.isIntersecting) {
-          // Блок в видимости
           if (!isFullImageLoaded) {
             visibilityTimerRef.current = setTimeout(() => {
               loadImage();
-            }, 100); // Ожидаем, пока блок находится в видимости 200 мс
+            }, 200); // Ожидаем, пока блок находится в видимости 200 мс
           }
-        } else {
-          // Блок вышел из видимости — сбрасываем таймер загрузки
-          clearTimeout(visibilityTimerRef.current);
-        }
+        } else clearTimeout(visibilityTimerRef.current);
       },
       { threshold: 0.1 }, // 10% блока должны быть видимы
     );
@@ -55,10 +55,10 @@ const Image = ({ imageUrl, className }) => {
 
   return (
     <ImageStyles
-      isVisible={isFullImageLoaded}
+      isIntersected={isIntersected}
       className={className}
       ref={blockRef}
-      imageUrl={DEFAULT_IMAGE}
+      imageUrl={`url(${DEFAULT_IMAGE})`}
     >
       <div>
         <div />

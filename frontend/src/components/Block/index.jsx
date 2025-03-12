@@ -10,6 +10,7 @@ import {
   CloseButton,
   ImageContainer,
   Modal,
+  ImagesContainer,
 } from "./block.styles";
 import { OpredelitelContext } from "../../context";
 import Icon from "../Icon";
@@ -20,7 +21,6 @@ import BlockImage from "../../components/Image";
 const Block = ({ item, id }) => {
   const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
   const [currentIndex, setCurrentIndex] = useState(null);
-  const API_URL = process.env.REACT_APP_API_URL;
 
   const openImage = (index) => setCurrentIndex(index);
   const resetCurrentIndex = () => setCurrentIndex(null);
@@ -68,14 +68,31 @@ const Block = ({ item, id }) => {
               <ArrowButtonRight onClick={showNextImage}>
                 <Icon icon="arrowRight" height={20} width={20} fill="#000" />
               </ArrowButtonRight>
-              <ImageContainer>
-                <ProgressiveImage
-                  smallSrc={`${API_URL}/api/optimized-images/250/${item.images[currentIndex].dataset.original}`}
-                  largeSrc={`${API_URL}/images/${item.images[currentIndex].dataset.original}`}
-                  alt={item.images[currentIndex].name}
-                />
-                <span>{item.images[currentIndex].name}</span>
-              </ImageContainer>
+              <div
+                style={{
+                  width: "100%",
+                  overflow: "hidden",
+                  position: "relative",
+                }}
+              >
+                <ImagesContainer
+                  style={{
+                    transform: `translateX(-${currentIndex * 100}%)`, // Сдвигаем контейнер на основу текущего индекса
+                  }}
+                >
+                  {item.images.map((image, index) => {
+                    return (
+                      <ImageContainer key={index}>
+                        <ProgressiveImage
+                          imageUrl={image.dataset.original}
+                          alt={image.name}
+                        />
+                        <span>{image.name}</span>
+                      </ImageContainer>
+                    );
+                  })}
+                </ImagesContainer>
+              </div>
             </Modal>
           )}
         </BlockHidden>
