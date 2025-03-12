@@ -11,6 +11,7 @@ import {
   ImageContainer,
   Modal,
   ImagesContainer,
+  FullscreenWrapper,
 } from "./block.styles";
 import { OpredelitelContext } from "../../context";
 import Icon from "../Icon";
@@ -68,13 +69,7 @@ const Block = ({ item, id }) => {
               <ArrowButtonRight onClick={showNextImage}>
                 <Icon icon="arrowRight" height={20} width={20} fill="#000" />
               </ArrowButtonRight>
-              <div
-                style={{
-                  width: "100%",
-                  overflow: "hidden",
-                  position: "relative",
-                }}
-              >
+              <FullscreenWrapper>
                 <ImagesContainer
                   style={{
                     transform: `translateX(-${currentIndex * 100}%)`, // Сдвигаем контейнер на основу текущего индекса
@@ -92,7 +87,7 @@ const Block = ({ item, id }) => {
                     );
                   })}
                 </ImagesContainer>
-              </div>
+              </FullscreenWrapper>
             </Modal>
           )}
         </BlockHidden>
