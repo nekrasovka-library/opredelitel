@@ -81,7 +81,7 @@ const Image = ({ imageUrl, className }) => {
     <ImageStyles
       isVisible={isVisible}
       className={className}
-      // ref={blockRef}
+      ref={blockRef}
       // imageUrl={imageBlob ? `url(${imageBlob})` : "none"}
       imageUrl={`url(${imageUrl})`}
     >
