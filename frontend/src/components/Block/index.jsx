@@ -68,12 +68,21 @@ const Block = ({ item, id }) => {
               <CloseButton onClick={resetCurrentIndex}>
                 <Icon icon="close" height={20} fill="#000" />
               </CloseButton>
-              <ArrowButtonLeft onClick={showPreviousImage}>
-                <Icon icon="arrowLeft" height={20} width={20} fill="#000" />
-              </ArrowButtonLeft>
-              <ArrowButtonRight onClick={showNextImage}>
-                <Icon icon="arrowRight" height={20} width={20} fill="#000" />
-              </ArrowButtonRight>
+              {item.images.length > 1 && (
+                <>
+                  <ArrowButtonLeft onClick={showPreviousImage}>
+                    <Icon icon="arrowLeft" height={20} width={20} fill="#000" />
+                  </ArrowButtonLeft>
+                  <ArrowButtonRight onClick={showNextImage}>
+                    <Icon
+                      icon="arrowRight"
+                      height={20}
+                      width={20}
+                      fill="#000"
+                    />
+                  </ArrowButtonRight>
+                </>
+              )}
               <FullscreenWrapper>
                 <ImagesContainer currentIndex={currentIndex}>
                   {item.images.map((image, index) => {

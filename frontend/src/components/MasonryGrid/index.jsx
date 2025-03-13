@@ -43,7 +43,7 @@ const MasonryGrid = ({ images, openImage }) => {
 
       imgLoad.on("done", function () {
         const imageElements = imgLoad.images;
-        const imageWidths = imageElements.map((img) => img.img.offsetWidth);
+        const imageWidths = imageElements.map((img) => img.img.naturalWidth);
         const groupedWidths = groupImagesByWidth(gap, imageWidths, targetWidth);
         updateGridWidth(gridElement, targetWidth);
         initializeGrid(gridElement, imageElements, groupedWidths);
