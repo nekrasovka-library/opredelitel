@@ -89,6 +89,7 @@ const Block = ({ item, id }) => {
                     return (
                       <ImageContainer key={index}>
                         <ProgressiveImage
+                          isToLoad={index === currentIndex}
                           imageUrl={image.dataset.original}
                           alt={image.name}
                         />
