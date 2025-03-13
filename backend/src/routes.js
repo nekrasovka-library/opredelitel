@@ -35,7 +35,7 @@ router.get("/optimized-images/:height/:imageName", async (req, res) => {
     // Обработка через sharp
     const optimizedImageBuffer = await sharp(originalImagePath)
       .resize({ height: heightValue })
-      .toFormat("webp")
+      .toFormat("webp", { quality: 100 })
       .toBuffer();
 
     // Сохраняем обработанное изображение
