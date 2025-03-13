@@ -3,6 +3,7 @@ import { FullscreenImage } from "../Block/block.styles";
 
 const ProgressiveImage = ({ isToLoad, imageUrl, alt }) => {
   const [currentSrc, setCurrentSrc] = useState("");
+  const [largeLoaded, setLargeLoaded] = useState(false);
   const API_URL = process.env.REACT_APP_API_URL;
   const small = `${API_URL}/api/optimized-images/250/${imageUrl}`;
   const large = `${API_URL}/images/${imageUrl}`;
@@ -12,13 +13,16 @@ const ProgressiveImage = ({ isToLoad, imageUrl, alt }) => {
   }, [imageUrl, small]);
 
   useEffect(() => {
-    if (isToLoad) {
+    if (isToLoad && !largeLoaded) {
       const largeImage = new Image();
       largeImage.src = large;
 
-      largeImage.onload = () => setCurrentSrc(large);
+      largeImage.onload = () => {
+        setCurrentSrc(large);
+        setLargeLoaded(true);
+      };
     }
-  }, [isToLoad, large]); // Эффект запускается, если изменяются smallSrc или largeSrc
+  }, [isToLoad, large, largeLoaded]); // Эффект запускается, если изменяются smallSrc или largeSrc
 
   return (
     <FullscreenImage
