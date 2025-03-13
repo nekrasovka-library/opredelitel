@@ -2,13 +2,14 @@ import React, { useEffect, useRef } from "react";
 import { BlockImages } from "./masonry.styles";
 import imagesLoaded from "imagesloaded";
 
-// Константы
 const GRID_MAX_WIDTH = 1200;
 
 const MasonryGrid = ({ images, openImage }) => {
   const gridRef = useRef(null);
 
   useEffect(() => {
+    if (!gridRef.current) return;
+
     const getGridStyles = (gridElement) => {
       const computedStyle = window.getComputedStyle(gridElement);
       return {
@@ -32,12 +33,12 @@ const MasonryGrid = ({ images, openImage }) => {
 
     const resizeGrid = () => {
       const gridElement = gridRef.current;
-      if (!gridElement) return;
 
       const { paddingLeft, paddingRight, gap } = getGridStyles(gridElement);
       const totalOffset = paddingLeft + paddingRight;
       const width = window.innerWidth;
       const targetWidth = Math.min(width, GRID_MAX_WIDTH) - totalOffset;
+
       const imgLoad = imagesLoaded(gridElement);
 
       imgLoad.on("done", function () {
@@ -53,7 +54,7 @@ const MasonryGrid = ({ images, openImage }) => {
     resizeGrid();
 
     return () => window.removeEventListener("resize", resizeGrid);
-  }, []);
+  }, [gridRef.current]);
 
   const calculateAdjustedWidths = (gap, group, targetWidth) => {
     const totalGaps = gap * (group.length - 1);
@@ -88,18 +89,19 @@ const MasonryGrid = ({ images, openImage }) => {
 
     return groups;
   };
-
   return (
     <BlockImages>
       <div ref={gridRef} style={{ visibility: "hidden" }}>
-        {images.map((image, index) => (
-          <div key={index} onClick={() => openImage(index)}>
-            <img
-              src={`${process.env.REACT_APP_API_URL}/api/optimized-images/250/${image.dataset.original}`}
-              alt={image.name}
-            />
-          </div>
-        ))}
+        {images.map((image, index) => {
+          return (
+            <div key={index} onClick={() => openImage(index)}>
+              <img
+                src={`${process.env.REACT_APP_API_URL}/api/optimized-images/250/${image.dataset.original}`}
+                alt={image.name}
+              />
+            </div>
+          );
+        })}
       </div>
     </BlockImages>
   );
