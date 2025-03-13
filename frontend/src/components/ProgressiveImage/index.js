@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FullscreenImage } from "../Block/block.styles";
 
 // Вынесение глобальной конфигурации на уровень модуля (если используется в других местах)
 const API_URL = process.env.REACT_APP_API_URL;
 
-// Генерация URL изображений, чтобы избежать дублирования кода
+// Функция генерации URL изображения
 const generateImageURL = (type, imageUrl) =>
   type === "small"
     ? `${API_URL}/api/optimized-images/250/${imageUrl}`
@@ -12,40 +12,44 @@ const generateImageURL = (type, imageUrl) =>
 
 const ProgressiveImage = ({ isToLoad, imageUrl, alt }) => {
   const [currentSrc, setCurrentSrc] = useState("");
-  const [isLargeLoaded, setIsLargeLoaded] = useState(false);
+  const [isLargeImageLoaded, setIsLargeImageLoaded] = useState(false);
+  const [isSmallImageLoaded, setIsSmallImageLoaded] = useState(false);
 
-  // Ссылки на малое и большое изображение
-  const smallImageURL = generateImageURL("small", imageUrl);
-  const largeImageURL = generateImageURL("large", imageUrl);
+  const smallImageURL = useMemo(
+    () => generateImageURL("small", imageUrl),
+    [imageUrl],
+  );
+  const largeImageURL = useMemo(
+    () => generateImageURL("large", imageUrl),
+    [imageUrl],
+  );
 
-  // Обработка загрузки большого изображения
-  const handleLargeImageLoad = () => {
-    const largeImage = new Image(); // Создание нового объекта изображения
+  const loadSmallImage = useCallback(() => {
+    setCurrentSrc(smallImageURL);
+    setIsSmallImageLoaded(true);
+  }, [smallImageURL]);
+
+  const loadLargeImage = useCallback(() => {
+    const largeImage = new Image();
     largeImage.src = largeImageURL;
     largeImage.onload = () => {
       setCurrentSrc(largeImageURL);
-      setIsLargeLoaded(true);
+      setIsLargeImageLoaded(true);
     };
-  };
+  }, [largeImageURL]);
 
   useEffect(() => {
-    if (!isLargeLoaded) {
-      setCurrentSrc(smallImageURL); // Установка малой версии изображения
-    }
-  }, [smallImageURL, isLargeLoaded]); // Изменения происходят при смене изображения или флага загрузки
+    if (isToLoad && !isSmallImageLoaded) loadSmallImage();
+    if (isToLoad && isSmallImageLoaded && !isLargeImageLoaded) loadLargeImage();
+  }, [
+    isToLoad,
+    isSmallImageLoaded,
+    isLargeImageLoaded,
+    loadSmallImage,
+    loadLargeImage,
+  ]);
 
-  useEffect(() => {
-    if (isToLoad && !isLargeLoaded) {
-      handleLargeImageLoad(); // Запуск загрузки большого изображения
-    }
-  }, [isToLoad, isLargeLoaded]);
-
-  return (
-    <FullscreenImage
-      src={currentSrc} // Использование текущего URL
-      alt={alt} // Альтернативный текст
-    />
-  );
+  return <FullscreenImage src={currentSrc} alt={alt} />;
 };
 
 export default ProgressiveImage;
