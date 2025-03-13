@@ -1,33 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { FullscreenImage } from "../Block/block.styles";
 
+// Вынесение глобальной конфигурации на уровень модуля (если используется в других местах)
+const API_URL = process.env.REACT_APP_API_URL;
+
+// Генерация URL изображений, чтобы избежать дублирования кода
+const generateImageURL = (type, imageUrl) =>
+  type === "small"
+    ? `${API_URL}/api/optimized-images/250/${imageUrl}`
+    : `${API_URL}/images/${imageUrl}`;
+
 const ProgressiveImage = ({ isToLoad, imageUrl, alt }) => {
   const [currentSrc, setCurrentSrc] = useState("");
-  const [largeLoaded, setLargeLoaded] = useState(false);
-  const API_URL = process.env.REACT_APP_API_URL;
-  const small = `${API_URL}/api/optimized-images/250/${imageUrl}`;
-  const large = `${API_URL}/images/${imageUrl}`;
+  const [isLargeLoaded, setIsLargeLoaded] = useState(false);
+
+  // Ссылки на малое и большое изображение
+  const smallImageURL = generateImageURL("small", imageUrl);
+  const largeImageURL = generateImageURL("large", imageUrl);
+
+  // Обработка загрузки большого изображения
+  const handleLargeImageLoad = () => {
+    const largeImage = new Image(); // Создание нового объекта изображения
+    largeImage.src = largeImageURL;
+    largeImage.onload = () => {
+      setCurrentSrc(largeImageURL);
+      setIsLargeLoaded(true);
+    };
+  };
 
   useEffect(() => {
-    setCurrentSrc(small);
-  }, [imageUrl, small]);
-
-  useEffect(() => {
-    if (isToLoad && !largeLoaded) {
-      const largeImage = new Image();
-      largeImage.src = large;
-
-      largeImage.onload = () => {
-        setCurrentSrc(large);
-        setLargeLoaded(true);
-      };
+    if (!isLargeLoaded) {
+      setCurrentSrc(smallImageURL); // Установка малой версии изображения
     }
-  }, [isToLoad, large, largeLoaded]); // Эффект запускается, если изменяются smallSrc или largeSrc
+  }, [smallImageURL, isLargeLoaded]); // Изменения происходят при смене изображения или флага загрузки
+
+  useEffect(() => {
+    if (isToLoad && !isLargeLoaded) {
+      handleLargeImageLoad(); // Запуск загрузки большого изображения
+    }
+  }, [isToLoad, isLargeLoaded]);
 
   return (
     <FullscreenImage
-      src={currentSrc} // Текущее изображение (smallSrc -> largeSrc)
-      alt={alt}
+      src={currentSrc} // Использование текущего URL
+      alt={alt} // Альтернативный текст
     />
   );
 };
