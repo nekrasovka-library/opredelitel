@@ -52,6 +52,7 @@ const Block = ({ item, id }) => {
       event.preventDefault();
       const lastSegment = event.target.href.split("/").filter(Boolean).pop();
       setPaperSelected(lastSegment);
+      window.history.replaceState({}, "", `/opredelitel/${lastSegment}`);
     }
   };
 
