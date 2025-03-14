@@ -4,11 +4,10 @@ import { OpredelitelContext } from "../../context";
 import { listData } from "../../context/data";
 
 const List = () => {
-  const { paperSelected, paperType, setPaperSelected, setIsIntersected } =
+  const { paperSelected, paperType, setPaperSelected } =
     useContext(OpredelitelContext);
 
   const handlePaperSelected = (id) => {
-    setIsIntersected(false);
     setPaperSelected(id === paperSelected ? "" : id);
   };
 
