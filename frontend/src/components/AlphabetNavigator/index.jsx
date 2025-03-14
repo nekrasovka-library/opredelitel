@@ -12,7 +12,7 @@ import { useIsMobile } from "../../helpers";
 import { listData } from "../../context/data";
 
 const Alphabet = () => {
-  const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
+  const { paperSelected } = useContext(OpredelitelContext);
   const isMobile = useIsMobile(640);
   const navigationRef = useRef(null);
   const { paperType } = useContext(OpredelitelContext);
@@ -35,10 +35,6 @@ const Alphabet = () => {
       top,
       behavior: "smooth",
     });
-  };
-
-  const handlePaperSelected = (id) => {
-    setPaperSelected(id === paperSelected ? "" : id);
   };
 
   const groupedByLetter = listData[paperType].reduce((acc, item) => {
@@ -106,16 +102,13 @@ const Alphabet = () => {
                 {data[item].map((ul) => {
                   return (
                     <div key={ul.id}>
-                      <ItemTitle onClick={() => handlePaperSelected(ul.id)}>
-                        {ul.title}
+                      <ItemTitle>
+                        <a href={`${ul.id}`}>{ul.title}</a>
                       </ItemTitle>
                       <List>
                         {ul.lists.map((li, index) => (
-                          <ListItem
-                            key={index}
-                            onClick={() => handlePaperSelected(ul.id)}
-                          >
-                            {li}
+                          <ListItem key={index}>
+                            <a href={`${item.id}`}>{li}</a>
                           </ListItem>
                         ))}
                       </List>

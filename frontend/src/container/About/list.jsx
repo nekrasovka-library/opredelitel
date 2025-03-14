@@ -4,29 +4,21 @@ import { OpredelitelContext } from "../../context";
 import { listData } from "../../context/data";
 
 const List = () => {
-  const { paperSelected, paperType, setPaperSelected } =
-    useContext(OpredelitelContext);
-
-  const handlePaperSelected = (id) => {
-    setPaperSelected(id === paperSelected ? "" : id);
-  };
+  const { paperType } = useContext(OpredelitelContext);
 
   return (
     <ListStyles>
       {listData[paperType].map((item) => {
         return (
           <div key={item.id}>
-            <span onClick={() => handlePaperSelected(item.id)}>
-              {item.title}
+            <span>
+              <a href={`${item.id}`}>{item.title}</a>
             </span>
             <ul>
               {item.lists.map((list) => {
                 return (
-                  <li
-                    key={list.id}
-                    onClick={() => handlePaperSelected(item.id)}
-                  >
-                    {list}
+                  <li key={list}>
+                    <a href={`${item.id}`}>{list}</a>
                   </li>
                 );
               })}

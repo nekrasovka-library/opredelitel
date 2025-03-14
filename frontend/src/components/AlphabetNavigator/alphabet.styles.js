@@ -24,10 +24,10 @@ const Navigation = styled.nav`
 const NavItem = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
   position: relative;
 
   span {
+    cursor: pointer;
     font-size: 25px;
     font-weight: 400;
     color: #ffffff;
@@ -50,6 +50,10 @@ const Dropdown = styled.div`
   font-size: 14px;
   text-decoration: underline;
   min-width: 200px;
+
+  a {
+    color: #222222;
+  }
 `;
 
 const ItemTitle = styled.div`
@@ -65,7 +69,6 @@ const List = styled.ul`
 const ListItem = styled.li`
   line-height: 1.6;
   font-size: 12px;
-  cursor: pointer;
 `;
 
 export { Navigation, NavItem, Dropdown, ItemTitle, List, ListItem };
