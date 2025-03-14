@@ -42,7 +42,7 @@ const Block = ({ item, id }) => {
   const togglePaperSelection = () => {
     const newId = id === paperSelected ? "" : id;
     setPaperSelected(newId);
-    window.history.replaceState({}, "", `/${newId}`);
+    window.history.replaceState({}, "", `/opredelitel/${newId}`);
   };
 
   return (

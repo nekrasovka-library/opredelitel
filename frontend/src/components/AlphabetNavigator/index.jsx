@@ -23,7 +23,7 @@ const Alphabet = () => {
   const handlePaperSelected = (id) => {
     const newId = id === paperSelected ? "" : id;
     setPaperSelected(newId);
-    window.history.replaceState({}, "", `/${newId}`);
+    window.history.replaceState({}, "", `/opredelitel/${newId}`);
   };
 
   const getElementPosition = (id) => {
