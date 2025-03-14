@@ -21,7 +21,9 @@ const Alphabet = () => {
   const [isANVisible, setIsANVisible] = useState(false);
 
   const handlePaperSelected = (id) => {
-    setPaperSelected(id === paperSelected ? "" : id);
+    const newId = id === paperSelected ? "" : id;
+    setPaperSelected(newId);
+    window.history.replaceState({}, "", `/${newId}`);
   };
 
   const getElementPosition = (id) => {

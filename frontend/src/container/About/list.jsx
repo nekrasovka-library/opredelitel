@@ -8,7 +8,9 @@ const List = () => {
     useContext(OpredelitelContext);
 
   const handlePaperSelected = (id) => {
-    setPaperSelected(id === paperSelected ? "" : id);
+    const newId = id === paperSelected ? "" : id;
+    setPaperSelected(newId);
+    window.history.replaceState({}, "", `/${newId}`);
   };
 
   return (
