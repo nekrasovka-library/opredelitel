@@ -99,10 +99,7 @@ const ListStyles = styled.div`
   span,
   li {
     cursor: pointer;
-
-    a {
-      color: #222222;
-    }
+    color: #222222;
   }
 
   > div {

@@ -51,14 +51,13 @@ const Dropdown = styled.div`
   text-decoration: underline;
   min-width: 200px;
 
-  a {
-    color: #222222;
+  > div {
+    cursor: pointer;
   }
 `;
 
 const ItemTitle = styled.div`
   text-decoration: underline;
-  cursor: pointer;
 `;
 
 const List = styled.ul`

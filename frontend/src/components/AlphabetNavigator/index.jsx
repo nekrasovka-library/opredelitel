@@ -12,13 +12,17 @@ import { useIsMobile } from "../../helpers";
 import { listData } from "../../context/data";
 
 const Alphabet = () => {
-  const { paperSelected } = useContext(OpredelitelContext);
+  const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
   const isMobile = useIsMobile(640);
   const navigationRef = useRef(null);
   const { paperType } = useContext(OpredelitelContext);
   const [data, setData] = useState({});
   const [hoveredLetter, setHoveredLetter] = useState(null); // Состояние для текущей буквы, на которую навели
   const [isANVisible, setIsANVisible] = useState(false);
+
+  const handlePaperSelected = (id) => {
+    setPaperSelected(id === paperSelected ? "" : id);
+  };
 
   const getElementPosition = (id) => {
     const element = document.getElementById(`${id}`);
@@ -101,15 +105,11 @@ const Alphabet = () => {
               <Dropdown>
                 {data[item].map((ul) => {
                   return (
-                    <div key={ul.id}>
-                      <ItemTitle>
-                        <a href={`${ul.id}`}>{ul.title}</a>
-                      </ItemTitle>
+                    <div key={ul.id} onClick={() => handlePaperSelected(ul.id)}>
+                      <ItemTitle>{ul.title}</ItemTitle>
                       <List>
                         {ul.lists.map((li, index) => (
-                          <ListItem key={index}>
-                            <a href={`${item.id}`}>{li}</a>
-                          </ListItem>
+                          <ListItem key={index}>{li}</ListItem>
                         ))}
                       </List>
                     </div>
