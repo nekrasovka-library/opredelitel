@@ -5,7 +5,8 @@ import { OpredelitelContext } from "../../context";
 import { blocksData } from "../../context/data";
 
 const Blocks = () => {
-  const { paperType, setPaperSelected } = useContext(OpredelitelContext);
+  const { paperType, setPaperType, setPaperSelected } =
+    useContext(OpredelitelContext);
 
   const hasKey = (data, searchKey) => {
     for (const key in data) {
@@ -20,7 +21,12 @@ const Blocks = () => {
         }
       } else if (typeof data[key] === "object") {
         if (data[key][searchKey]) {
-          return true; // Если ключ найден
+          if (paperType === key) {
+            return true;
+          } else {
+            setPaperType(key);
+            return true;
+          }
         }
       }
     }
