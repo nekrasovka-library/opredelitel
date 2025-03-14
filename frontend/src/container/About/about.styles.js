@@ -93,39 +93,33 @@ const AboutType = styled.div`
 `;
 
 const ListStyles = styled.div`
+  display: flex;
   text-decoration: underline;
   margin-top: 90px;
-
-  span,
-  li {
-    cursor: pointer;
-    color: #222222;
-  }
 
   > div {
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 15px;
+    flex: 1;
 
-    ul {
-      margin: 5px 0;
+    > div {
+      cursor: pointer;
+
+      ul {
+        margin: 0;
+      }
     }
   }
 
   @media (min-width: 641px) {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    row-gap: 10px;
-    column-gap: 30px;
-    max-width: 1200px;
+    column-gap: 40px;
+    max-height: 1200px;
   }
 
   @media (max-width: 640px) {
-    display: flex;
     flex-direction: column;
-    row-gap: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    row-gap: 15px;
   }
 `;
 
