@@ -39,8 +39,8 @@ const Block = ({ item, id }) => {
     );
   };
 
-  const togglePaperSelection = () => {
-    const newId = id === paperSelected ? "" : id;
+  const togglePaperSelection = (paperId) => {
+    const newId = paperId === paperSelected ? "" : paperId;
     setPaperSelected(newId);
     window.history.replaceState({}, "", `/opredelitel/${newId}`);
   };
@@ -55,14 +55,28 @@ const Block = ({ item, id }) => {
       <Liner linerHeight={30} borderColor={item.color} />
       <BlockRectangularButton
         borderColor={item.color}
-        onClick={togglePaperSelection}
+        onClick={() => togglePaperSelection(id)}
       >
         {item.name}
       </BlockRectangularButton>
       {paperSelected === id && (
         <BlockHidden>
           <BlockDescription>
-            <div dangerouslySetInnerHTML={{ __html: item.text }} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: item.text,
+              }}
+              onClick={(event) => {
+                if (event.target.tagName === "A") {
+                  event.preventDefault();
+                  const pathSegments = event.target.href
+                    .split("/")
+                    .filter(Boolean);
+                  const lastSegment = pathSegments[pathSegments.length - 1];
+                  togglePaperSelection(lastSegment);
+                }
+              }}
+            />
           </BlockDescription>
           <MasonryGrid images={item.images} openImage={openImage} />
           {currentIndex !== null && (
