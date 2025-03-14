@@ -35,10 +35,16 @@ const Alphabet = () => {
   };
 
   const scrollToElement = (id) => {
-    const top = getElementPosition(id);
+    const targetPosition = getElementPosition(id);
+    const currentScrollPosition = window.scrollY;
+
+    const scrollTop =
+      targetPosition > currentScrollPosition
+        ? targetPosition // Если элемент ниже, крутим к позиции.
+        : Math.max(currentScrollPosition - 1, 0); // Иначе скроллим из текущей позиции.
 
     window.scrollTo({
-      top,
+      top: scrollTop,
       behavior: "smooth",
     });
   };
