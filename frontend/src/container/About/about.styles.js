@@ -94,7 +94,6 @@ const AboutType = styled.div`
 
 const ListStyles = styled.div`
   display: flex;
-  text-decoration: underline;
   margin-top: 90px;
 
   > div {
@@ -104,7 +103,10 @@ const ListStyles = styled.div`
     flex: 1;
 
     > div {
-      cursor: pointer;
+      span {
+        cursor: pointer;
+        text-decoration: underline;
+      }
 
       ul {
         margin: 0;

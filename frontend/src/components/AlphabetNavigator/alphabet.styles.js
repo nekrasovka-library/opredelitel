@@ -48,7 +48,6 @@ const Dropdown = styled.div`
   padding: 15px;
   z-index: 100;
   font-size: 14px;
-  text-decoration: underline;
   min-width: 200px;
 
   > div {
@@ -68,6 +67,7 @@ const List = styled.ul`
 const ListItem = styled.li`
   line-height: 1.6;
   font-size: 12px;
+  text-decoration: none;
 `;
 
 export { Navigation, NavItem, Dropdown, ItemTitle, List, ListItem };
