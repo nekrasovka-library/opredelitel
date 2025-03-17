@@ -5,7 +5,7 @@ const router = Router();
 const { join } = require("path");
 const sharp = require("sharp");
 
-const CACHE_PATH = path.join(__dirname, ".cache"); // Кэш обработанных изображений
+const CACHE_PATH = path.join(__dirname, "../.cache"); // Кэш обработанных изображений
 
 // Проверка и создание основной папки кэша
 if (!fs.existsSync(CACHE_PATH)) {
@@ -30,7 +30,7 @@ router.get("/optimized-images/:size/:imageName", async (req, res) => {
     return res.status(400).send("Invalid size parameter");
   }
 
-  const originalImagePath = join(__dirname, "../../images", imageName);
+  const originalImagePath = join(__dirname, "../../../images", imageName);
   const cachedImageFolder = path.join(CACHE_PATH, folderName); // Путь до папки c сохранением (например: .cache/small)
   const cachedImagePath = path.join(
     cachedImageFolder,
