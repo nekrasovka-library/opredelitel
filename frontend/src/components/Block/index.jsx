@@ -56,13 +56,6 @@ const Block = ({ block, id }) => {
     }
   };
 
-  console.log(
-    "❗paperSelected === id",
-    paperSelected === id,
-    paperSelected,
-    id,
-  );
-
   return (
     <BlockStyles id={id}>
       <BlockImage
