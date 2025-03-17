@@ -7,7 +7,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 // Функция генерации URL изображения
 const generateImageURL = (type, imageUrl) =>
   type === "small"
-    ? `${API_URL}/api/optimized-images/250/${imageUrl}`
+    ? `${API_URL}/api/optimized-images/md/${imageUrl}`
     : `${API_URL}/images/${imageUrl}`;
 
 const ProgressiveImage = ({ isToLoad, imageUrl, alt }) => {

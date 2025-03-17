@@ -9,13 +9,12 @@ import {
 } from "./alphabet.styles";
 import { OpredelitelContext } from "../../context";
 import { useIsMobile } from "../../helpers";
-import { listData } from "../../context/data";
 
 const Alphabet = () => {
-  const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
+  const { lists, paperSelected, setPaperSelected } =
+    useContext(OpredelitelContext);
   const isMobile = useIsMobile(640);
   const navigationRef = useRef(null);
-  const { paperType } = useContext(OpredelitelContext);
   const [data, setData] = useState({});
   const [hoveredLetter, setHoveredLetter] = useState(null); // Состояние для текущей буквы, на которую навели
   const [isANVisible, setIsANVisible] = useState(false);
@@ -43,7 +42,7 @@ const Alphabet = () => {
     });
   };
 
-  const groupedByLetter = listData[paperType].reduce((acc, item) => {
+  const groupedByLetter = lists.reduce((acc, item) => {
     // Получаем первую букву заголовка
     const firstLetter = item.title[0];
 
@@ -66,7 +65,7 @@ const Alphabet = () => {
 
   useEffect(() => {
     setData(groupedByLetter);
-  }, [paperType]);
+  }, [lists]);
 
   useEffect(() => {
     if (isMobile) return;
@@ -111,7 +110,7 @@ const Alphabet = () => {
                       <ItemTitle>{ul.title}</ItemTitle>
                       <List>
                         {ul.lists.map((li, index) => (
-                          <ListItem key={index}>{li}</ListItem>
+                          <ListItem key={index}>{li.title}</ListItem>
                         ))}
                       </List>
                     </div>

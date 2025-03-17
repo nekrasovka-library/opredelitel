@@ -96,8 +96,8 @@ const MasonryGrid = ({ images, openImage }) => {
           return (
             <div key={index} onClick={() => openImage(index)}>
               <img
-                src={`${process.env.REACT_APP_API_URL}/api/optimized-images/200/${image.dataset.original}`}
-                alt={image.name}
+                src={`${process.env.REACT_APP_API_URL}/api/optimized-images/md/${image.original}`}
+                alt={image.title}
               />
             </div>
           );

@@ -19,12 +19,12 @@ import MasonryGrid from "../MasonryGrid";
 import ProgressiveImage from "../ProgressiveImage";
 import BlockImage from "../../components/Image";
 
-const Block = ({ item, id }) => {
+const Block = ({ block, id }) => {
   const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
   const [currentIndex, setCurrentIndex] = useState(null);
   const [isImageIntersected, setImageIntersected] = useState(false);
 
-  const TOTAL_IMAGES = item.images.length;
+  const TOTAL_IMAGES = block.images.length;
 
   const openImage = (index) => setCurrentIndex(index);
   const closeImage = () => setCurrentIndex(null);
@@ -50,39 +50,46 @@ const Block = ({ item, id }) => {
   const handleLinkClick = (event) => {
     if (event.target.tagName === "A") {
       event.preventDefault();
-      const lastSegment = event.target.href.split("/").filter(Boolean).pop();
+      const lastSegment = +event.target.href.split("/").filter(Boolean).pop();
       setPaperSelected(lastSegment);
       window.history.replaceState({}, "", `/opredelitel/${lastSegment}`);
     }
   };
 
+  console.log(
+    "❗paperSelected === id",
+    paperSelected === id,
+    paperSelected,
+    id,
+  );
+
   return (
     <BlockStyles id={id}>
       <BlockImage
-        imageUrl={item.album}
+        imageUrl={block.original}
         isIntersected={isImageIntersected}
         setIsIntersected={setImageIntersected}
       />
 
-      <Liner linerHeight={30} borderColor={item.color} />
+      <Liner linerHeight={30} borderColor={block.color} />
 
       <BlockRectangularButton
-        borderColor={item.color}
+        borderColor={block.color}
         onClick={handlePaperSelectionToggle}
       >
-        {item.name}
+        {block.title}
       </BlockRectangularButton>
 
       {paperSelected === id && (
         <BlockHidden>
           <BlockDescription>
             <div
-              dangerouslySetInnerHTML={{ __html: item.text }}
+              dangerouslySetInnerHTML={{ __html: block.text }}
               onClick={handleLinkClick}
             />
           </BlockDescription>
 
-          <MasonryGrid images={item.images} openImage={openImage} />
+          <MasonryGrid images={block.images} openImage={openImage} />
 
           {currentIndex !== null && (
             <Modal>
@@ -108,14 +115,14 @@ const Block = ({ item, id }) => {
 
               <FullscreenWrapper>
                 <ImagesContainer currentIndex={currentIndex}>
-                  {item.images.map((image, index) => (
+                  {block.images.map((image, index) => (
                     <ImageContainer key={index}>
                       <ProgressiveImage
                         isToLoad={index === currentIndex}
-                        imageUrl={image.dataset.original}
-                        alt={image.name}
+                        imageUrl={image.original}
+                        alt={image.title}
                       />
-                      <span>{image.name}</span>
+                      <span>{image.title}</span>
                     </ImageContainer>
                   ))}
                 </ImagesContainer>

@@ -2,53 +2,25 @@ import React, { useContext, useEffect } from "react";
 import Block from "../../components/Block";
 import { BlocksStyles } from "./blocks.styles";
 import { OpredelitelContext } from "../../context";
-import { blocksData } from "../../context/data";
 
 const Blocks = () => {
-  const { paperType, setPaperType, setPaperSelected } =
-    useContext(OpredelitelContext);
-
-  const hasKey = (data, searchKey) => {
-    for (const key in data) {
-      const entries = data[key];
-
-      // Проверяем, является ли значение массивом
-      if (Array.isArray(entries)) {
-        for (const entry of entries) {
-          if (entry[searchKey]) {
-            return true; // Если ключ найден
-          }
-        }
-      } else if (typeof data[key] === "object") {
-        if (data[key][searchKey]) {
-          if (paperType === key) {
-            return true;
-          } else {
-            setPaperType(key);
-            return true;
-          }
-        }
-      }
-    }
-
-    return false; // Ключ не найден
-  };
+  const { blocks, isLoaded, setPaperSelected } = useContext(OpredelitelContext);
 
   useEffect(() => {
-    const { pathname } = new URL(window.location);
-    const pathSegments = pathname.split("/").filter(Boolean); // Убираем пустые элементы
-    const lastSegment = pathSegments[pathSegments.length - 1];
-    const isKey = hasKey(blocksData, lastSegment);
+    if (isLoaded) {
+      const { pathname } = new URL(window.location);
+      const pathSegments = pathname.split("/").filter(Boolean); // Убираем пустые элементы
+      const lastSegment = +pathSegments[pathSegments.length - 1];
+      const isKey = blocks.some((block) => block.id === lastSegment);
 
-    if (isKey) setPaperSelected(lastSegment);
-  }, [window.location]);
+      if (isKey) setPaperSelected(lastSegment);
+    }
+  }, [window.location, isLoaded]);
 
   return (
     <BlocksStyles>
-      {Object.keys(blocksData[paperType]).map((item) => {
-        return (
-          <Block key={item} item={blocksData[paperType][item]} id={item} />
-        );
+      {blocks.map((block) => {
+        return <Block key={block.id} block={block} id={block.id} />;
       })}
     </BlocksStyles>
   );

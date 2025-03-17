@@ -6,7 +6,7 @@ const Image = ({ imageUrl, className, isIntersected, setIsIntersected }) => {
   const { setImagesToLoad, loadedImages } = useContext(OpredelitelContext);
 
   const API_URL = process.env.REACT_APP_API_URL;
-  const SMALL_IMAGE = `${API_URL}/api/optimized-images/20/${imageUrl}`;
+  const SMALL_IMAGE = `${API_URL}/api/optimized-images/sm/${imageUrl}`;
   const blockRef = useRef(null); // Ссылка на HTML-элемент
   const [isFullImageLoaded, setIsFullImageLoaded] = useState(false); // Флаг завершённой загрузки изображения (чтобы не грузить снова)
   const visibilityTimerRef = useRef(null); // Таймер на 200 мс

@@ -1,17 +1,18 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
+import { blocks, lists, images } from "./bd";
 
 // Создаем контекст
 export const OpredelitelContext = createContext();
+const API_URL = process.env.REACT_APP_API_URL;
 
 // Создаем провайдер для контекста
 export const OpredelitelProvider = ({ children }) => {
-  const API_URL = process.env.REACT_APP_API_URL;
-
   const [paperType, setPaperType] = useState(1);
   const [paperSelected, setPaperSelected] = useState("");
   const [loadedImages, setLoadedImages] = useState([]);
   const [imagesToLoad, setImagesToLoad] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
+  const [data, setData] = useState({ blocks: [], lists: [], isLoaded: false });
 
   // Функция загрузки изображения с использованием new Image
   const loadImage = (imageName) => {
@@ -34,6 +35,33 @@ export const OpredelitelProvider = ({ children }) => {
 
       // Устанавливаем путь
       img.src = imagePath;
+    });
+  };
+
+  const fetchData = (paperId) => {
+    const filteredBlocks = blocks.filter((block) => block.paperId === paperId);
+
+    setData({
+      blocks: filteredBlocks.map((block) => {
+        return {
+          id: block.id,
+          paperId: block.paperId,
+          tildaId: block.tildaId,
+          title: block.title,
+          original: block.original,
+          text: block.text,
+          color: block.color,
+          images: images.filter((image) => block.images.includes(image.id)),
+        };
+      }),
+      lists: filteredBlocks.map((block) => {
+        return {
+          id: block.id,
+          title: block.title,
+          lists: lists.filter((list) => block.lists.includes(list.id)),
+        };
+      }),
+      isLoaded: true,
     });
   };
 
@@ -73,6 +101,14 @@ export const OpredelitelProvider = ({ children }) => {
     }
   }, [imagesToLoad, processImages]);
 
+  useEffect(() => {
+    fetchData(paperType);
+  }, []);
+
+  useEffect(() => {
+    fetchData(paperType);
+  }, [paperType]);
+
   return (
     <OpredelitelContext.Provider
       value={{
@@ -82,6 +118,9 @@ export const OpredelitelProvider = ({ children }) => {
         setPaperSelected,
         setImagesToLoad,
         loadedImages,
+        blocks: data.blocks,
+        lists: data.lists,
+        isLoaded: data.isLoaded,
       }}
     >
       {children}

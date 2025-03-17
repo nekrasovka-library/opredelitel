@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ListStyles } from "./about.styles";
 import { OpredelitelContext } from "../../context";
-import { listData } from "../../context/data";
 
 const List = () => {
   const ITEMS_PER_COLUMN = 9; // Зависит от высоты и стилизации
-  const { paperType, paperSelected, setPaperSelected } =
+  const { paperSelected, setPaperSelected, lists } =
     useContext(OpredelitelContext);
+  const [columns, setColumns] = useState([]);
 
   const handlePaperSelected = (id) => {
     const newId = id === paperSelected ? "" : id;
@@ -19,10 +19,13 @@ const List = () => {
     for (let i = 0; i < arr.length; i += chunkSize) {
       result.push(arr.slice(i, i + chunkSize));
     }
+
     return result;
   };
 
-  const columns = chunkArray(listData[paperType], ITEMS_PER_COLUMN);
+  useEffect(() => {
+    setColumns(chunkArray(lists, ITEMS_PER_COLUMN));
+  }, [lists]);
 
   return (
     <ListStyles>
@@ -33,7 +36,7 @@ const List = () => {
               <span>{item.title}</span>
               <ul>
                 {item.lists.map((list) => (
-                  <li key={list}>{list}</li>
+                  <li key={list}>{list.title}</li>
                 ))}
               </ul>
             </div>

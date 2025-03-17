@@ -16,8 +16,8 @@ const About = () => {
         <img
           src={
             paperType === 1
-              ? `${process.env.REACT_APP_API_URL}/api/optimized-images/250/tild6364-6563-4639-b162-396464663162__-_5_943730_2.jpg`
-              : `${process.env.REACT_APP_API_URL}/api/optimized-images/250/tild3132-3662-4638-a563-636234373366___.jpg`
+              ? `${process.env.REACT_APP_API_URL}/api/optimized-images/md/tild6364-6563-4639-b162-396464663162__-_5_943730_2.jpg`
+              : `${process.env.REACT_APP_API_URL}/api/optimized-images/md/tild3132-3662-4638-a563-636234373366___.jpg`
           }
           alt=""
         />
