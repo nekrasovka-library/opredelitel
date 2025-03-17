@@ -4,17 +4,17 @@ const router = require("./routes");
 const setup = require("./middlewares/setup");
 
 // Constants for paths
-const PATH_TO_FRONTEND = join(__dirname, "../../frontend/build");
-const PATH_TO_IMAGES = join(__dirname, "../../images");
-const INDEX_HTML_PATH = join(PATH_TO_FRONTEND, "index.html");
+const FRONT_PATH = join(__dirname, "../../frontend/build");
+const IMAGE_PATH = join(__dirname, "../../images");
+const INDEX_HTML_PATH = join(FRONT_PATH, "index.html");
 
 const app = express();
 
 setup(app, {
   router,
   paths: {
-    frontend: PATH_TO_FRONTEND,
-    images: PATH_TO_IMAGES,
+    frontend: FRONT_PATH,
+    images: IMAGE_PATH,
   },
 });
 
