@@ -57,7 +57,7 @@ const useIsMobile = (breakpoint = 700) => {
 
     // Удаление слушателя при размонтировании компонента
     return () => window.removeEventListener("resize", handleResize);
-  }, [breakpoint]);
+  });
 
   return isMobile;
 };
