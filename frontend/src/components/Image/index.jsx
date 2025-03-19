@@ -23,8 +23,7 @@ const Image = ({ imageUrl, className, isIntersected, setIsIntersected }) => {
         if (entry.isIntersecting) {
           if (!isFullImageLoaded) {
             visibilityTimerRef.current = setTimeout(() => {
-              // loadImage();
-              setImagesToLoad((prevState) => [...prevState, imageUrl]);
+              setImagesToLoad(imageUrl);
             }, 200); // Ожидаем, пока блок находится в видимости 200 мс
           }
         } else clearTimeout(visibilityTimerRef.current);

@@ -2,37 +2,17 @@ import React, {
   createContext,
   useCallback,
   useEffect,
+  useReducer,
   useRef,
-  useState,
 } from "react";
 import { blocks, lists, images } from "./bd";
 import { useParams } from "react-router-dom";
-import { useIsMobile } from "../helpers";
+import { mapBlocks, mapLists, useIsMobile } from "../helpers";
+import { reducer, initialState } from "../reducers";
 
 // Создаем контекст
 export const OpredelitelContext = createContext();
 const API_URL = process.env.REACT_APP_API_URL;
-
-// Вспомогательная функция для преобразования данных блоков
-const mapBlocks = (filteredBlocks) =>
-  filteredBlocks.map((filteredBlock) => ({
-    id: filteredBlock.id,
-    paperId: filteredBlock.paperId,
-    tildaId: filteredBlock.tildaId,
-    title: filteredBlock.title,
-    original: filteredBlock.original,
-    text: filteredBlock.text,
-    color: filteredBlock.color,
-    images: images.filter((image) => filteredBlock.images.includes(image.id)),
-  }));
-
-// Вспомогательная функция для преобразования списков
-const mapLists = (filteredBlocks) =>
-  filteredBlocks.map((filteredBlock) => ({
-    id: filteredBlock.id,
-    title: filteredBlock.title,
-    lists: lists.filter((list) => filteredBlock.lists.includes(list.id)),
-  }));
 
 // Функция загрузки изображения
 const loadImage = (imageName) => {
@@ -47,49 +27,52 @@ const loadImage = (imageName) => {
 
 // Провайдер контекста
 export const OpredelitelProvider = ({ children }) => {
-  const [paperType, setPaperType] = useState(1);
-  const [loadedImages, setLoadedImages] = useState([]);
-  const [imagesToLoad, setImagesToLoad] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(true);
-  const [data, setData] = useState({ blocks: [], lists: [], isLoaded: false });
+  const [state, dispatch] = useReducer(reducer, initialState);
   const refMap = useRef({});
   const { blockId } = useParams();
   const isMobile = useIsMobile(640);
 
   // Функция для получения и обработки данных
-  const fetchData = useCallback((paperId) => {
-    const filteredBlocks = blocks.filter((block) => block.paperId === paperId);
-    setData({
-      blocks: mapBlocks(filteredBlocks),
-      lists: mapLists(filteredBlocks),
-      isLoaded: true,
-    });
-  }, []);
+  const fetchData = useCallback(
+    (paperId) => {
+      const filteredBlocks = blocks.filter(
+        (block) => block.paperId === paperId,
+      );
+      dispatch({
+        type: "SET_DATA",
+        payload: {
+          blocks: mapBlocks(filteredBlocks, images),
+          lists: mapLists(filteredBlocks, lists),
+          isLoaded: true,
+        },
+      });
+    },
+    [dispatch],
+  );
 
   // Основной процесс загрузки изображений
   const processImages = useCallback(async () => {
-    if (isLoaded && imagesToLoad.length > 0) {
-      const imageName = imagesToLoad[0];
-      setIsLoaded(false);
+    if (state.isLoaded && state.imagesToLoad.length > 0) {
+      const imageName = state.imagesToLoad[0];
+      dispatch({ type: "SET_IS_LOADED", payload: false });
       try {
         const uploadedPath = await loadImage(imageName);
-        setLoadedImages((prev) => [
-          ...prev,
-          { id: imageName, path: uploadedPath },
-        ]);
-        setImagesToLoad((prev) => prev.slice(1));
+        dispatch({
+          type: "ADD_LOADED_IMAGE",
+          payload: { id: imageName, path: uploadedPath },
+        });
+        dispatch({ type: "REMOVE_IMAGE_TO_LOAD" });
       } catch (error) {
         console.error(`Ошибка при обработке ${imageName}:`, error);
       } finally {
-        setIsLoaded(true);
+        dispatch({ type: "SET_IS_LOADED", payload: true });
       }
     }
-  }, [isLoaded, imagesToLoad]);
+  }, [state.isLoaded, state.imagesToLoad]);
 
   const scrollToElement = useCallback(
     (element) => {
       const { top } = element.getBoundingClientRect();
-
       window.scrollTo({
         top: window.scrollY + top - (isMobile ? 0 : 60),
         behavior: "smooth",
@@ -98,32 +81,37 @@ export const OpredelitelProvider = ({ children }) => {
     [isMobile],
   );
 
+  // Прокрутка при изменении blockId
   useEffect(() => {
-    if (blockId && refMap.current[blockId] && data.isLoaded) {
+    if (blockId && refMap.current[blockId] && state.data.isLoaded) {
       scrollToElement(refMap.current[blockId]);
     }
-  }, [data.isLoaded, blockId, refMap, scrollToElement]);
+  }, [blockId, refMap, scrollToElement, state.data.isLoaded]);
 
+  // Загрузка данных на основе paperType
   useEffect(() => {
-    if (imagesToLoad.length > 0) {
+    fetchData(state.paperType);
+  }, [state.paperType, fetchData]);
+
+  // Запуск процесса обработки изображений
+  useEffect(() => {
+    if (state.imagesToLoad.length > 0) {
       processImages();
     }
-  }, [imagesToLoad, processImages]);
-
-  useEffect(() => {
-    fetchData(paperType);
-  }, [paperType, fetchData]);
+  }, [state.imagesToLoad, processImages]);
 
   return (
     <OpredelitelContext.Provider
       value={{
-        paperType,
-        setPaperType,
-        setImagesToLoad,
-        loadedImages,
+        paperType: state.paperType,
+        setPaperType: (type) =>
+          dispatch({ type: "SET_PAPER_TYPE", payload: type }),
+        setImagesToLoad: (image) =>
+          dispatch({ type: "SET_IMAGES_TO_LOAD", payload: image }),
+        loadedImages: state.loadedImages,
         refMap,
-        blocks: data.blocks,
-        lists: data.lists,
+        blocks: state.data.blocks,
+        lists: state.data.lists,
       }}
     >
       {children}
