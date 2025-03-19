@@ -12,7 +12,7 @@ module.exports = {
   deploy: {
     prod: {
       user: "superuser",
-      host: "10.10.0.37",
+      host: "91.240.86.188",
       ref: "origin/master",
       repo: "git@github.com:nekrasovka-library/opredelitel.git",
       path: "/var/www/opredelitel",
