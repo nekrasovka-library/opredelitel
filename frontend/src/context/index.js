@@ -13,7 +13,7 @@ export const OpredelitelProvider = ({ children }) => {
   const refMap = useRef({});
   const { blockId } = useParams();
   const isMobile = useIsMobile(640);
-  const { fetchData, processImages, scrollToElement } = useDataHook(
+  const { fetchData, processImages, scrollToRef } = useDataHook(
     dispatch,
     isMobile,
   );
@@ -21,9 +21,9 @@ export const OpredelitelProvider = ({ children }) => {
   // Прокрутка при изменении blockId
   useEffect(() => {
     if (blockId && refMap.current[blockId] && state.data.isLoaded) {
-      scrollToElement(refMap.current[blockId]);
+      scrollToRef(refMap.current[blockId]);
     }
-  }, [blockId, refMap, scrollToElement, state.data.isLoaded]);
+  }, [blockId, refMap, scrollToRef, state.data.isLoaded]);
 
   // Загрузка данных на основе paperType
   useEffect(() => {

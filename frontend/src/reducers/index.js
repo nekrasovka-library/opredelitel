@@ -3,7 +3,6 @@ export const initialState = {
   loadedImages: [],
   imagesToLoad: [],
   isLoaded: true,
-  isMobile: false,
   data: { blocks: [], lists: [], isLoaded: false },
 };
 
@@ -28,8 +27,6 @@ export const reducer = (state, action) => {
       };
     case "SET_IS_LOADED":
       return { ...state, isLoaded: action.payload };
-    case "SET_IS_MOBILE":
-      return { ...state, isMobile: action.payload };
     case "SET_DATA":
       return { ...state, data: action.payload };
     default:

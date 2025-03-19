@@ -43,7 +43,7 @@ export const useDataHook = (dispatch, isMobile) => {
     [dispatch],
   );
 
-  const scrollToElement = useCallback(
+  const scrollToRef = useCallback(
     (element) => {
       const { top } = element.getBoundingClientRect();
 
@@ -55,5 +55,5 @@ export const useDataHook = (dispatch, isMobile) => {
     [isMobile],
   );
 
-  return { fetchData, processImages, scrollToElement };
+  return { fetchData, processImages, scrollToRef };
 };
