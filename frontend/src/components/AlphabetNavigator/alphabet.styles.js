@@ -51,7 +51,9 @@ const Dropdown = styled.div`
   min-width: 200px;
 
   > div {
-    cursor: pointer;
+    > div {
+      cursor: pointer;
+    }
   }
 `;
 
