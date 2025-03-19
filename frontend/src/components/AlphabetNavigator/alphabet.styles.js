@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Navigation = styled.nav`
   @media (min-width: 641px) {
@@ -57,8 +58,8 @@ const Dropdown = styled.div`
   }
 `;
 
-const ItemTitle = styled.div`
-  text-decoration: underline;
+const ItemTitle = styled(Link)`
+  color: #222222;
 `;
 
 const List = styled.ul`

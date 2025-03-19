@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Dropdown,
   ItemTitle,
@@ -11,36 +11,11 @@ import { OpredelitelContext } from "../../context";
 import { useIsMobile } from "../../helpers";
 
 const Alphabet = () => {
-  const { lists, paperSelected, setPaperSelected } =
-    useContext(OpredelitelContext);
+  const { lists, refMap } = useContext(OpredelitelContext);
   const isMobile = useIsMobile(640);
-  const navigationRef = useRef(null);
   const [data, setData] = useState({});
   const [hoveredLetter, setHoveredLetter] = useState(null); // Состояние для текущей буквы, на которую навели
   const [isANVisible, setIsANVisible] = useState(false);
-
-  const handlePaperSelected = (id) => {
-    const newId = id === paperSelected ? "" : id;
-    setPaperSelected(newId);
-    window.history.replaceState({}, "", `/opredelitel/${newId}`);
-  };
-
-  const getElementPosition = (id) => {
-    const element = document.getElementById(`${id}`);
-    const { top } = element.getBoundingClientRect();
-    const offset = isMobile ? 0 : navigationRef.current.clientHeight;
-
-    return window.scrollY + top - offset;
-  };
-
-  const scrollToElement = (id) => {
-    const top = getElementPosition(id);
-
-    window.scrollTo({
-      top,
-      behavior: "smooth",
-    });
-  };
 
   const groupedByLetter = lists.reduce((acc, item) => {
     // Получаем первую букву заголовка
@@ -58,19 +33,13 @@ const Alphabet = () => {
   }, {});
 
   useEffect(() => {
-    if (paperSelected) {
-      scrollToElement(paperSelected);
-    }
-  }, [paperSelected]);
-
-  useEffect(() => {
     setData(groupedByLetter);
   }, [lists]);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile || !refMap.current["alphabet_navigator"]) return;
 
-    const targetElement = document.getElementById("alphabet_navigator");
+    const targetElement = refMap.current["alphabet_navigator"];
 
     const handleScroll = () => {
       const rect = targetElement.getBoundingClientRect(); // Получаем позицию относительно окна
@@ -86,10 +55,10 @@ const Alphabet = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isMobile]);
+  }, [isMobile, refMap]);
 
   return (
-    <Navigation ref={navigationRef} isVisible={isANVisible}>
+    <Navigation isVisible={isANVisible}>
       {Object.keys(data).map((item) => {
         return (
           <NavItem
@@ -106,8 +75,10 @@ const Alphabet = () => {
               <Dropdown>
                 {data[item].map((ul) => {
                   return (
-                    <div key={ul.id} onClick={() => handlePaperSelected(ul.id)}>
-                      <ItemTitle>{ul.title}</ItemTitle>
+                    <div key={ul.id}>
+                      <ItemTitle to={`/opredelitel/${ul.id}`}>
+                        {ul.title}
+                      </ItemTitle>
                       <List>
                         {ul.lists.map((li, index) => (
                           <ListItem key={index}>{li.title}</ListItem>

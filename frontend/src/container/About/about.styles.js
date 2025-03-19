@@ -103,9 +103,9 @@ const ListStyles = styled.div`
     flex: 1;
 
     > div {
-      span {
+      a {
         cursor: pointer;
-        text-decoration: underline;
+        color: #222222;
       }
 
       ul {

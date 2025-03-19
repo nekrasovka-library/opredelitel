@@ -18,9 +18,12 @@ import Icon from "../Icon";
 import MasonryGrid from "../MasonryGrid";
 import ProgressiveImage from "../ProgressiveImage";
 import BlockImage from "../../components/Image";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Block = ({ block, id }) => {
-  const { paperSelected, setPaperSelected } = useContext(OpredelitelContext);
+  const navigate = useNavigate();
+  const { blockId } = useParams();
+  const { refMap } = useContext(OpredelitelContext);
   const [currentIndex, setCurrentIndex] = useState(null);
   const [isImageIntersected, setImageIntersected] = useState(false);
 
@@ -42,22 +45,20 @@ const Block = ({ block, id }) => {
   };
 
   const handlePaperSelectionToggle = () => {
-    const newPaperId = id === paperSelected ? "" : id;
-    setPaperSelected(newPaperId);
-    window.history.replaceState({}, "", `/opredelitel/${newPaperId}`);
+    const newPaperId = id === +blockId ? "" : id;
+    navigate(`/opredelitel/${newPaperId}`);
   };
 
   const handleLinkClick = (event) => {
     if (event.target.tagName === "A") {
       event.preventDefault();
       const lastSegment = +event.target.href.split("/").filter(Boolean).pop();
-      setPaperSelected(lastSegment);
-      window.history.replaceState({}, "", `/opredelitel/${lastSegment}`);
+      navigate(`/opredelitel/${lastSegment}`);
     }
   };
 
   return (
-    <BlockStyles id={id}>
+    <BlockStyles ref={(el) => (refMap.current[id] = el)}>
       <BlockImage
         imageUrl={block.original}
         isIntersected={isImageIntersected}
@@ -73,7 +74,7 @@ const Block = ({ block, id }) => {
         {block.title}
       </BlockRectangularButton>
 
-      {paperSelected === id && (
+      {+blockId === id && (
         <BlockHidden>
           <BlockDescription>
             <div

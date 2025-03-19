@@ -6,7 +6,7 @@ import { OpredelitelContext } from "../../context";
 import List from "./list";
 
 const About = () => {
-  const { paperType } = useContext(OpredelitelContext);
+  const { paperType, refMap } = useContext(OpredelitelContext);
   const [isListOpen, setListOpen] = useState(false);
 
   return (
@@ -82,7 +82,7 @@ const About = () => {
         )}
       </AboutType>
       <RoundedButton
-        id="alphabet_navigator"
+        ref={(el) => (refMap.current["alphabet_navigator"] = el)}
         onClick={() => setListOpen(!isListOpen)}
       >
         Алфавитный указатель

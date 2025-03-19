@@ -1,5 +1,13 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { blocks, lists, images } from "./bd";
+import { useParams } from "react-router-dom";
+import { useIsMobile } from "../helpers";
 
 // Создаем контекст
 export const OpredelitelContext = createContext();
@@ -40,11 +48,13 @@ const loadImage = (imageName) => {
 // Провайдер контекста
 export const OpredelitelProvider = ({ children }) => {
   const [paperType, setPaperType] = useState(1);
-  const [paperSelected, setPaperSelected] = useState("");
   const [loadedImages, setLoadedImages] = useState([]);
   const [imagesToLoad, setImagesToLoad] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const [data, setData] = useState({ blocks: [], lists: [], isLoaded: false });
+  const refMap = useRef({});
+  const { blockId } = useParams();
+  const isMobile = useIsMobile(640);
 
   // Функция для получения и обработки данных
   const fetchData = useCallback((paperId) => {
@@ -76,6 +86,24 @@ export const OpredelitelProvider = ({ children }) => {
     }
   }, [isLoaded, imagesToLoad]);
 
+  const scrollToElement = useCallback(
+    (element) => {
+      const { top } = element.getBoundingClientRect();
+
+      window.scrollTo({
+        top: window.scrollY + top - (isMobile ? 0 : 60),
+        behavior: "smooth",
+      });
+    },
+    [isMobile],
+  );
+
+  useEffect(() => {
+    if (blockId && refMap.current[blockId] && data.isLoaded) {
+      scrollToElement(refMap.current[blockId]);
+    }
+  }, [data.isLoaded, blockId, refMap, scrollToElement]);
+
   useEffect(() => {
     if (imagesToLoad.length > 0) {
       processImages();
@@ -91,13 +119,11 @@ export const OpredelitelProvider = ({ children }) => {
       value={{
         paperType,
         setPaperType,
-        paperSelected,
-        setPaperSelected,
         setImagesToLoad,
         loadedImages,
+        refMap,
         blocks: data.blocks,
         lists: data.lists,
-        isLoaded: data.isLoaded,
       }}
     >
       {children}

@@ -1,18 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ListStyles } from "./about.styles";
 import { OpredelitelContext } from "../../context";
+import { Link } from "react-router-dom";
 
 const List = () => {
   const ITEMS_PER_COLUMN = 9; // Зависит от высоты и стилизации
-  const { paperSelected, setPaperSelected, lists } =
-    useContext(OpredelitelContext);
+  const { lists } = useContext(OpredelitelContext);
   const [columns, setColumns] = useState([]);
-
-  const handlePaperSelected = (id) => {
-    const newId = id === paperSelected ? "" : id;
-    setPaperSelected(newId);
-    window.history.replaceState({}, "", `/opredelitel/${newId}`);
-  };
 
   const chunkArray = (arr, chunkSize) => {
     const result = [];
@@ -32,8 +26,8 @@ const List = () => {
       {columns.map((column, columnIndex) => (
         <div key={columnIndex}>
           {column.map((item) => (
-            <div key={item.id} onClick={() => handlePaperSelected(item.id)}>
-              <span>{item.title}</span>
+            <div key={item.id}>
+              <Link to={`/opredelitel/${item.id}`}>{item.title}</Link>
               <ul>
                 {item.lists.map((list) => (
                   <li key={list}>{list.title}</li>
