@@ -15,11 +15,6 @@ const ResumeStyles = styled.div`
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-
-    a {
-      color: rgb(0, 0, 0);
-      box-shadow: none;
-    }
   }
 `;
 
