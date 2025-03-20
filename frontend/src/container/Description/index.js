@@ -6,7 +6,7 @@ const Description = () => {
   return (
     <DescriptionStyles>
       <DescriptionText>
-        <div style={{ lineHeight: "28px" }}>
+        <div>
           Определитель декоративной бумаги&nbsp;— визуальный справочник,
           помогающий ориентироваться во&nbsp;множестве типов и&nbsp;узоров
           декоративных бумаг. Они&nbsp;бесконечно разнообразны, система

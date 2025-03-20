@@ -21,14 +21,13 @@ const DescriptionStyles = styled.div`
 `;
 
 const DescriptionText = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 15px;
-  line-height: 28px;
-  color: #000000;
-  font-size: 18px;
-  font-weight: 400;
-  text-align: center;
+  > div {
+    line-height: 28px;
+    color: #000000;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+  }
 
   @media (min-width: 641px) {
     width: 745px;
