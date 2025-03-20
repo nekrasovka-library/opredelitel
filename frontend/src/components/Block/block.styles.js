@@ -19,6 +19,12 @@ const BlockDescription = styled.div`
   row-gap: 20px;
   text-align: center;
 
+  > div {
+    a {
+      cursor: pointer;
+    }
+  }
+
   * {
     color: #000;
   }
