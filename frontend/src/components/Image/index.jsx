@@ -59,10 +59,10 @@ const Image = ({ imageUrl, className, isIntersected, setIsIntersected }) => {
 
   return (
     <ImageStyles
-      isIntersected={isIntersected}
       className={className}
       ref={blockRef}
-      imageUrl={`url(${SMALL_IMAGE})`}
+      $isIntersected={isIntersected}
+      $imageUrl={`url(${SMALL_IMAGE})`}
     >
       <div>
         <div />

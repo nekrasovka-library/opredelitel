@@ -55,16 +55,16 @@ const HowButtons = styled.div`
       font-size: 16px;
       width: calc(100% - 40px);
 
-      &:nth-child(${({ active }) => active}) {
+      &:nth-child(${({ $isActive }) => $isActive}) {
         z-index: 1;
       }
 
-      &:nth-child(${({ active }) => (active === 1 ? 2 : 1)}) {
+      &:nth-child(${({ $isActive }) => ($isActive === 1 ? 2 : 1)}) {
         position: absolute;
         z-index: 0;
 
-        ${({ isShow }) =>
-          isShow
+        ${({ $isShow }) =>
+          $isShow
             ? "transform: translateY(52px); transition: transform 0.2s ease;"
             : "visibility: hidden;"}
       }

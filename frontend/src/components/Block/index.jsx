@@ -68,7 +68,7 @@ const Block = ({ block, id }) => {
       <Liner linerHeight={30} borderColor={block.color} />
 
       <BlockRectangularButton
-        borderColor={block.color}
+        $borderColor={block.color}
         onClick={handlePaperSelectionToggle}
       >
         {block.title}

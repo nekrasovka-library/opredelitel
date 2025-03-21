@@ -7,7 +7,7 @@ const Navigation = styled.nav`
     height: 60px;
     width: 100%;
     position: fixed;
-    transform: translateY(${({ isVisible }) => (isVisible ? "0" : "-60px")});
+    transform: translateY(${({ $isVisible }) => ($isVisible ? "0" : "-60px")});
     transition: transform 0.3s ease;
     top: 0;
     z-index: 100;
@@ -34,7 +34,7 @@ const NavItem = styled.div`
     color: #ffffff;
     padding: 15px;
 
-    ${({ isActive }) => isActive && "background-color: #fff; color: #000"};
+    ${({ $isActive }) => $isActive && "background-color: #fff; color: #000"};
   }
 `;
 

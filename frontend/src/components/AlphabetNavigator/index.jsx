@@ -58,11 +58,11 @@ const Alphabet = () => {
   }, [isMobile, refMap]);
 
   return (
-    <Navigation isVisible={isANVisible}>
+    <Navigation $isVisible={isANVisible}>
       {Object.keys(data).map((item) => {
         return (
           <NavItem
-            isActive={hoveredLetter === item}
+            $isActive={hoveredLetter === item}
             key={item}
             onMouseEnter={() => setHoveredLetter(item)}
             onMouseLeave={() => setHoveredLetter(null)}

@@ -12,7 +12,7 @@ const ImageStyles = styled.div`
     left: 0;
     clip-path: inset(0 0 0 0);
     z-index: 1;
-    background-image: ${({ imageUrl }) => imageUrl};
+    background-image: ${({ $imageUrl }) => $imageUrl};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -23,8 +23,8 @@ const ImageStyles = styled.div`
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      ${({ isIntersected }) =>
-        isIntersected
+      ${({ $isIntersected }) =>
+        $isIntersected
           ? "position: fixed; top: 0; left: 0;"
           : "position: initial"};
     }

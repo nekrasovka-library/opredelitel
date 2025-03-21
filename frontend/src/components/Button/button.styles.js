@@ -33,8 +33,8 @@ const TextButton = styled(Button)`
 `;
 
 const RectangularButton = styled(TextButton)`
-  color: ${({ borderColor }) => borderColor};
-  border-color: ${({ borderColor }) => borderColor};
+  color: ${({ $borderColor }) => $borderColor};
+  border-color: ${({ $borderColor }) => $borderColor};
   width: fit-content;
 
   @media (min-width: 641px) {
@@ -47,12 +47,12 @@ const RectangularButton = styled(TextButton)`
 
   @media (hover: hover) {
     &:hover {
-      background-color: ${({ borderColor }) => borderColor};
+      background-color: ${({ $borderColor }) => $borderColor};
     }
   }
 
-  ${({ isActive, borderColor }) =>
-    isActive && `background-color: ${borderColor}; color: #fff;`};
+  ${({ $isActive, $borderColor }) =>
+    $isActive && `background-color: ${$borderColor}; color: #fff;`};
 `;
 
 const RoundedButton = styled(TextButton)`

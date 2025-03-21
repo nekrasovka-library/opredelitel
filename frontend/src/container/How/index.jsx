@@ -56,18 +56,18 @@ const How = () => {
           </div>
         </HowDescription>
       )}
-      <HowButtons active={paperType} isShow={isShow}>
+      <HowButtons $isActive={paperType} $isShow={isShow}>
         <RectangularButton
-          isActive={paperType === 1}
+          $isActive={paperType === 1}
+          $borderColor="#000000"
           onClick={() => handleButton(1)}
-          borderColor="#000000"
         >
           Мраморная бумага
         </RectangularButton>
         <RectangularButton
-          isActive={paperType === 2}
+          $isActive={paperType === 2}
+          $borderColor="#000000"
           onClick={() => handleButton(2)}
-          borderColor="#000000"
         >
           Клейстерная бумага
         </RectangularButton>
