@@ -7,10 +7,47 @@ const BlockStyles = styled.div`
   align-items: center;
 `;
 
+const BlockMobileImages = styled.div`
+  overflow-x: auto; /* Включаем горизонтальную прокрутку */
+  white-space: nowrap; /* Запрещаем перенос строк, чтобы элементы были в строку */
+  width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > div {
+    display: flex; /* Гибкое расположение, чтобы элементы шли друг за другом */
+    column-gap: 15px; /* Пробел между дочерними элементами */
+    max-height: 250px;
+
+    & > div {
+      display: inline-block; /* Каждый дочерний элемент занимает свое место в строке */
+      flex-shrink: 0; /* Запрещаем уменьшать элементы */
+
+      &:first-child {
+        padding-left: 20px;
+      }
+
+      &:last-child {
+        padding-right: 20px;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+`;
+
 const BlockHidden = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `;
 
 const BlockDescription = styled.div`
@@ -184,4 +221,5 @@ export {
   BlockRectangularButton,
   ImagesContainer,
   FullscreenWrapper,
+  BlockMobileImages,
 };

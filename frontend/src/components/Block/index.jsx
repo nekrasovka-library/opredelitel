@@ -12,6 +12,7 @@ import {
   Modal,
   ImagesContainer,
   FullscreenWrapper,
+  BlockMobileImages,
 } from "./block.styles";
 import { OpredelitelContext } from "../../context";
 import Icon from "../Icon";
@@ -20,7 +21,7 @@ import ProgressiveImage from "../ProgressiveImage";
 import BlockImage from "../../components/Image";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Block = ({ block, id }) => {
+const Block = ({ block, id, isMobile }) => {
   const navigate = useNavigate();
   const { blockId } = useParams();
   const { refMap } = useContext(OpredelitelContext);
@@ -83,7 +84,24 @@ const Block = ({ block, id }) => {
             />
           </BlockDescription>
 
-          <MasonryGrid images={block.images} openImage={openImage} />
+          {isMobile ? (
+            <BlockMobileImages>
+              <div>
+                {block.images.map((image, index) => {
+                  return (
+                    <div key={index} onClick={() => openImage(index)}>
+                      <img
+                        src={`${process.env.REACT_APP_API_URL}/api/optimized-images/md/${image.original}`}
+                        alt={image.title}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </BlockMobileImages>
+          ) : (
+            <MasonryGrid images={block.images} openImage={openImage} />
+          )}
 
           {currentIndex !== null && (
             <Modal>
