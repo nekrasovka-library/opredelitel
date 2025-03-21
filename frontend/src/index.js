@@ -12,13 +12,11 @@ const ROUTES = [
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {ROUTES.map(({ path, element }, index) => (
-          <Route key={index} path={path} element={element} />
-        ))}
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Routes>
+      {ROUTES.map(({ path, element }, index) => (
+        <Route key={index} path={path} element={element} />
+      ))}
+    </Routes>
+  </BrowserRouter>,
 );

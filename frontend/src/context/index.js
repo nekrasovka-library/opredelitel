@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useReducer, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useIsMobile } from "../helpers";
+import { mapBlocks, mapLists, useIsMobile } from "../helpers";
 import { reducer, initialState } from "../reducers";
 import { useDataHook } from "../hooks";
+import { blocks, images, lists } from "./bd";
 
 // Создаем контекст
 export const OpredelitelContext = createContext();
@@ -13,10 +14,35 @@ export const OpredelitelProvider = ({ children }) => {
   const refMap = useRef({});
   const { blockId } = useParams();
   const isMobile = useIsMobile(640);
-  const { fetchData, processImages, scrollToRef } = useDataHook(
-    dispatch,
-    isMobile,
-  );
+  const { processImages, scrollToRef } = useDataHook(dispatch, isMobile);
+
+  const fetchData = (type) => {
+    const filteredBlocks = blocks.filter((block) => block.paperId === type);
+    dispatch({
+      type: "SET_DATA",
+      payload: {
+        blocks: mapBlocks(filteredBlocks, images),
+        lists: mapLists(filteredBlocks, lists),
+        isLoaded: true,
+      },
+    });
+  };
+
+  useEffect(() => {
+    let type = state.paperType;
+
+    if (blockId) {
+      const block = blocks.find((block) => block.id === +blockId);
+
+      if (state.paperType !== block.paperId) {
+        type = block.paperId;
+      }
+
+      dispatch({ type: "SET_PAPER_TYPE", payload: type });
+    }
+
+    fetchData(type);
+  }, []);
 
   // Прокрутка при изменении blockId
   useEffect(() => {
@@ -25,17 +51,15 @@ export const OpredelitelProvider = ({ children }) => {
     }
   }, [blockId, refMap, scrollToRef, state.data.isLoaded]);
 
-  // Загрузка данных на основе paperType
-  useEffect(() => {
-    fetchData(state.paperType);
-  }, [state.paperType, fetchData]);
-
   // Запуск процесса обработки изображений
   useEffect(() => {
     if (state.imagesToLoad.length > 0) {
-      processImages(state);
+      processImages({
+        isLoaded: state.isLoaded,
+        imagesToLoad: state.imagesToLoad,
+      });
     }
-  }, [state.imagesToLoad, processImages, state]);
+  }, [state.imagesToLoad, state.isLoaded, processImages]);
 
   return (
     <OpredelitelContext.Provider
@@ -45,6 +69,7 @@ export const OpredelitelProvider = ({ children }) => {
         loadedImages: state.loadedImages,
         blocks: state.data.blocks,
         lists: state.data.lists,
+        fetchData: fetchData,
         setPaperType: (type) =>
           dispatch({ type: "SET_PAPER_TYPE", payload: type }),
         setImagesToLoad: (image) =>

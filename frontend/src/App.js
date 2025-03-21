@@ -22,13 +22,15 @@ function Opredelitel() {
   return (
     <OpredelitelProvider>
       <Header />
-      <AlphabetNavigator />
-      <Title />
-      <Description />
-      <How />
-      <About />
-      <Blocks />
-      <Resume />
+      <main>
+        <AlphabetNavigator />
+        <Title />
+        <Description />
+        <How />
+        <About />
+        <Blocks />
+        <Resume />
+      </main>
       <IconButton onClick={handleScrollTop}>
         <Icon icon="arrowUp" />
       </IconButton>

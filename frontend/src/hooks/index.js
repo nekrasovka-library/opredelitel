@@ -1,30 +1,12 @@
 import { useCallback } from "react";
-import { mapBlocks, mapLists, loadImage } from "../helpers";
-import { blocks, lists, images } from "../context/bd";
+import { loadImage } from "../helpers";
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const useDataHook = (dispatch, isMobile) => {
-  const fetchData = useCallback(
-    (paperId) => {
-      const filteredBlocks = blocks.filter(
-        (block) => block.paperId === paperId,
-      );
-      dispatch({
-        type: "SET_DATA",
-        payload: {
-          blocks: mapBlocks(filteredBlocks, images),
-          lists: mapLists(filteredBlocks, lists),
-          isLoaded: true,
-        },
-      });
-    },
-    [dispatch],
-  );
-
   const processImages = useCallback(
-    async (state) => {
-      if (state.isLoaded && state.imagesToLoad.length > 0) {
-        const imageName = state.imagesToLoad[0];
+    async ({ isLoaded, imagesToLoad }) => {
+      if (isLoaded && imagesToLoad.length > 0) {
+        const imageName = imagesToLoad[0];
         dispatch({ type: "SET_IS_LOADED", payload: false });
         try {
           const uploadedPath = await loadImage(imageName, API_URL);
@@ -55,5 +37,5 @@ export const useDataHook = (dispatch, isMobile) => {
     [isMobile],
   );
 
-  return { fetchData, processImages, scrollToRef };
+  return { processImages, scrollToRef };
 };

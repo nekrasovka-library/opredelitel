@@ -73,13 +73,10 @@ const HowButtons = styled.div`
 `;
 
 const HowDescription = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
   text-align: center;
   padding-bottom: 60px;
 
-  span {
+  > div {
     font-size: 18px;
     color: #000000;
     font-weight: 400;
@@ -88,7 +85,7 @@ const HowDescription = styled.div`
   @media (min-width: 641px) {
     max-width: 760px;
 
-    span {
+    > div {
       line-height: 1.55;
     }
   }
@@ -97,7 +94,7 @@ const HowDescription = styled.div`
     padding-right: 20px;
     padding-left: 20px;
 
-    span {
+    > div {
       line-height: 1.45;
     }
   }
