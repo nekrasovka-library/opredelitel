@@ -112,7 +112,7 @@ const FullscreenImage = styled.img`
   }
 
   @media (max-width: 640px) {
-    width: 100%;
+    width: 90%;
     height: auto;
   }
 `;
