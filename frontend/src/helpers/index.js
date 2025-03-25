@@ -62,4 +62,26 @@ const useIsMobile = (breakpoint = 700) => {
   return isMobile;
 };
 
-export { useIsMobile, mapBlocks, mapLists, loadImage };
+const useElementVisibility = (ref, callback, offset = 0) => {
+  useEffect(() => {
+    if (typeof window === "undefined" && !ref) return;
+
+    const onWindowScroll = () => {
+      const rect = ref.getBoundingClientRect();
+      const isVisible = rect.top - offset <= 0;
+
+      // Вызываем переданный callback с параметром: виден элемент или нет
+      callback(isVisible);
+    };
+
+    // Слушаем событие прокрутки
+    window.addEventListener("scroll", onWindowScroll);
+
+    // Убираем слушатель при размонтировании
+    return () => {
+      window.removeEventListener("scroll", onWindowScroll);
+    };
+  }, [ref, callback, offset]); // Зависимости
+};
+
+export { useIsMobile, mapBlocks, mapLists, loadImage, useElementVisibility };

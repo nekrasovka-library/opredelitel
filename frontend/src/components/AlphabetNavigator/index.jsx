@@ -8,11 +8,10 @@ import {
   NavItem,
 } from "./alphabet.styles";
 import { OpredelitelContext } from "../../context";
-import { useIsMobile } from "../../helpers";
+import { useElementVisibility } from "../../helpers";
 
 const Alphabet = () => {
   const { lists, refMap } = useContext(OpredelitelContext);
-  const isMobile = useIsMobile(640);
   const [data, setData] = useState({});
   const [hoveredLetter, setHoveredLetter] = useState(null); // Состояние для текущей буквы, на которую навели
   const [isANVisible, setIsANVisible] = useState(false);
@@ -36,26 +35,11 @@ const Alphabet = () => {
     setData(groupedByLetter);
   }, [lists]);
 
-  useEffect(() => {
-    if (isMobile || !refMap.current["alphabet_navigator"]) return;
-
-    const targetElement = refMap.current["alphabet_navigator"];
-
-    const handleScroll = () => {
-      const rect = targetElement.getBoundingClientRect(); // Получаем позицию относительно окна
-      const offset = rect.top - 20; // Учитываем отступ в 60px
-
-      if (offset <= 0) {
-        setIsANVisible(true);
-      } else setIsANVisible(false);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isMobile, refMap]);
+  useElementVisibility(
+    refMap.current["alphabet_navigator"], // Передаем ссылку на элемент
+    (isVisible) => setIsANVisible(isVisible), // Устанавливаем видимость через callback
+    20, // Отступ в 20px
+  );
 
   return (
     <Navigation $isVisible={isANVisible}>
