@@ -52,8 +52,6 @@ const BlockHidden = styled.div`
 
 const BlockDescription = styled.div`
   display: flex;
-  flex-direction: column;
-  row-gap: 20px;
   text-align: center;
 
   > div {
@@ -64,6 +62,7 @@ const BlockDescription = styled.div`
 
   * {
     color: #000;
+    line-height: 1.55;
   }
 
   @media (min-width: 641px) {
