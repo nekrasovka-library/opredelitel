@@ -13,12 +13,12 @@ const How = () => {
   const navigate = useNavigate();
 
   const handleButton = (id) => {
-    if (paperType === id) return;
-
     navigate(`/opredelitel/`);
     fetchData(id);
     setPaperType(id);
-    if (isMobile) setIsShow((prevState) => !prevState);
+    if (isMobile) {
+      setIsShow((prevState) => !prevState);
+    }
   };
 
   return (
@@ -56,7 +56,7 @@ const How = () => {
           </div>
         </HowDescription>
       )}
-      <HowButtons $isActive={paperType} $isShow={isShow}>
+      <HowButtons $active={paperType} $isShow={isShow}>
         <RectangularButton
           $isActive={paperType === 1}
           $borderColor="#000000"
