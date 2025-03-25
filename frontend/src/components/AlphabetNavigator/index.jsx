@@ -14,7 +14,7 @@ const Alphabet = () => {
   const { lists, refMap } = useContext(OpredelitelContext);
   const [data, setData] = useState({});
   const [hoveredLetter, setHoveredLetter] = useState(null); // Состояние для текущей буквы, на которую навели
-  const [isANVisible, setIsANVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const groupedByLetter = lists.reduce((acc, item) => {
     // Получаем первую букву заголовка
@@ -37,12 +37,12 @@ const Alphabet = () => {
 
   useElementVisibility(
     refMap.current["alphabet_navigator"], // Передаем ссылку на элемент
-    (isVisible) => setIsANVisible(isVisible), // Устанавливаем видимость через callback
+    (isVisible) => setIsVisible(isVisible), // Устанавливаем видимость через callback
     20, // Отступ в 20px
   );
 
   return (
-    <Navigation $isVisible={isANVisible}>
+    <Navigation $isVisible={isVisible}>
       {Object.keys(data).map((item) => {
         return (
           <NavItem
