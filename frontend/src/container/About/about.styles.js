@@ -16,26 +16,6 @@ const AboutStyles = styled.div`
       }
     }
   }
-
-  @media (min-width: 641px) {
-    > div {
-      &:nth-child(2) {
-        > img {
-          margin-top: 90px;
-        }
-      }
-    }
-  }
-
-  @media (max-width: 640px) {
-    > div {
-      &:nth-child(2) {
-        > img {
-          margin-top: 40px;
-        }
-      }
-    }
-  }
 `;
 
 const AboutType = styled.div`
