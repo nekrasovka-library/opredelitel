@@ -62,12 +62,12 @@ const useIsMobile = (breakpoint = 700) => {
   return isMobile;
 };
 
-const useElementVisibility = (ref, callback, offset = 0) => {
+const useElementVisibility = (ref, refName, callback, offset = 0) => {
   useEffect(() => {
-    if (typeof window === "undefined" && !ref) return;
+    if (typeof window === "undefined" && !ref.current[refName]) return;
 
     const onWindowScroll = () => {
-      const rect = ref.getBoundingClientRect();
+      const rect = ref.current[refName].getBoundingClientRect();
       const isVisible = rect.top - offset <= 0;
 
       // Вызываем переданный callback с параметром: виден элемент или нет
