@@ -36,7 +36,8 @@ const Alphabet = () => {
   }, [lists]);
 
   useElementVisibility(
-    refMap.current["alphabet_navigator"], // Передаем ссылку на элемент
+    refMap,
+    "alphabet_navigator",
     (isVisible) => setIsVisible(isVisible), // Устанавливаем видимость через callback
     20, // Отступ в 20px
   );
