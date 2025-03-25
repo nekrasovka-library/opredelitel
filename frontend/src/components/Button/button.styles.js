@@ -85,6 +85,7 @@ const LinkButton = styled(Button)`
   padding-right: 40px;
   width: fit-content;
   border-color: #000000;
+  color: #000000;
 
   @media (hover: hover) {
     &:hover {
