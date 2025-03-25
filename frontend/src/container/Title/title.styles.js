@@ -8,7 +8,6 @@ const TitleStyles = styled.div`
 
   > h1 {
     color: #000000;
-    font-weight: 400;
     text-align: center;
   }
 
@@ -24,7 +23,6 @@ const TitleStyles = styled.div`
 
       h1 {
         text-align: center;
-        font-weight: 400;
       }
     }
 

@@ -25,7 +25,6 @@ const AboutType = styled.div`
   h3,
   span,
   em {
-    font-weight: 400;
     color: #000000;
   }
 

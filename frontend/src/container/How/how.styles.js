@@ -12,7 +12,6 @@ const HowStyles = styled.div`
     &:first-child {
       h3 {
         color: #000000;
-        font-weight: 400;
         line-height: 1;
         font-size: 26px;
         cursor: pointer;
@@ -79,7 +78,6 @@ const HowDescription = styled.div`
   > div {
     font-size: 18px;
     color: #000000;
-    font-weight: 400;
   }
 
   @media (min-width: 641px) {

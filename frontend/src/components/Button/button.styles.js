@@ -20,7 +20,6 @@ const Button = styled.button`
 `;
 
 const TextButton = styled(Button)`
-  font-weight: 400;
   border-width: 2px;
   width: fit-content;
 
@@ -80,7 +79,6 @@ const LinkButton = styled(Button)`
   height: 55px;
   font-size: 14px;
   line-height: 1.55;
-  font-weight: 400;
   border-width: 1px;
   border-radius: 30px;
   padding-left: 40px;
