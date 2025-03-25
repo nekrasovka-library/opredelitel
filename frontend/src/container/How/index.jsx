@@ -16,9 +16,7 @@ const How = () => {
     navigate(`/opredelitel/`);
     fetchData(id);
     setPaperType(id);
-    if (isMobile) {
-      setIsShow((prevState) => !prevState);
-    }
+    if (isMobile) setIsShow((prevState) => !prevState);
   };
 
   return (
