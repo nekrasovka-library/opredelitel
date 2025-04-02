@@ -103,7 +103,7 @@ const About = () => {
         ref={(el) => (refMap.current["alphabet_navigator"] = el)}
         onClick={() => setListOpen(!isListOpen)}
       >
-        Алфавитный указатель
+        Алфавитный указатель узоров
       </RoundedButton>
       {isListOpen && <List />}
     </AboutStyles>
