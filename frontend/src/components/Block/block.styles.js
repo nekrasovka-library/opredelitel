@@ -60,8 +60,7 @@ const BlockDescription = styled.div`
     }
 
     &,
-    em:not(:last-child),
-    &:not(em + span) {
+    em:not(:last-child) {
       font-size: 18px;
     }
   }
