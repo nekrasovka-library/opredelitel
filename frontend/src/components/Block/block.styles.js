@@ -58,12 +58,16 @@ const BlockDescription = styled.div`
     a {
       cursor: pointer;
     }
+
+    &,
+    > em:not(:last-child) {
+      font-size: 18px;
+    }
   }
 
   * {
     color: #000;
     line-height: 1.55;
-    font-size: 18px;
   }
 
   @media (min-width: 641px) {
