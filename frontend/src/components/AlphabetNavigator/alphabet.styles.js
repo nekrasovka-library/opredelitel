@@ -40,7 +40,6 @@ const NavItem = styled.div`
 const Dropdown = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
   position: absolute;
   top: 60px;
   left: 0;
@@ -49,6 +48,15 @@ const Dropdown = styled.div`
   z-index: 100;
   font-size: 14px;
   min-width: 200px;
+
+  li,
+  a {
+    line-height: 1.6;
+  }
+
+  ul {
+    margin: 0;
+  }
 
   > div {
     > div {
@@ -68,7 +76,6 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   line-height: 1.6;
-  font-size: 12px;
   text-decoration: none;
 `;
 

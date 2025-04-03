@@ -56,7 +56,7 @@ const Alphabet = () => {
             }
           >
             <span>{item}</span>
-            {hoveredLetter === item && (
+            {"З" === item && (
               <Dropdown>
                 {data[item].map((ul) => {
                   return (

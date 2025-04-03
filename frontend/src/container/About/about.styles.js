@@ -60,12 +60,18 @@ const AboutType = styled.div`
 const ListStyles = styled.div`
   display: flex;
   margin-top: 90px;
+  font-size: 14px;
 
   > div {
     display: flex;
     flex-direction: column;
     row-gap: 15px;
     flex: 1;
+
+    li,
+    a {
+      line-height: 1.6;
+    }
 
     > div {
       a {
