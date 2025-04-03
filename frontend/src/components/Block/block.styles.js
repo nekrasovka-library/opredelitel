@@ -63,6 +63,7 @@ const BlockDescription = styled.div`
   * {
     color: #000;
     line-height: 1.55;
+    font-size: 18px;
   }
 
   @media (min-width: 641px) {

@@ -22,16 +22,8 @@ const AboutType = styled.div`
   padding-bottom: 75px;
   text-align: center;
 
-  h3,
-  span,
-  em {
+  * {
     color: #000000;
-  }
-
-  span,
-  em {
-    font-size: 18px;
-    line-height: 1.35;
   }
 
   > h3 {
@@ -40,14 +32,8 @@ const AboutType = styled.div`
   }
 
   > div {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-
-    span {
-      display: block;
-      margin: 0;
-    }
+    font-size: 18px;
+    line-height: 1.35;
   }
 
   @media (min-width: 641px) {
