@@ -55,13 +55,10 @@ const BlockDescription = styled.div`
   text-align: center;
 
   > div {
+    font-size: 18px;
+
     a {
       cursor: pointer;
-    }
-
-    &,
-    em:not(:last-child) {
-      font-size: 18px;
     }
   }
 
