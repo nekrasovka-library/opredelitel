@@ -9,7 +9,9 @@ const mapBlocks = (filteredBlocks, images) =>
     original: filteredBlock.original,
     text: filteredBlock.text,
     color: filteredBlock.color,
-    images: images.filter((image) => filteredBlock.images.includes(image.id)),
+    images: filteredBlock.images
+      .map((id) => images.find((image) => image.id === id))
+      .filter(Boolean),
   }));
 
 const mapLists = (filteredBlocks, lists) =>
