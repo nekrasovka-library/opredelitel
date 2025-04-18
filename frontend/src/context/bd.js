@@ -2543,67 +2543,67 @@ const images = [
   },
   {
     id: 382,
-    original: "Фонтаны_1_Deutsche_Museum.jpg",
+    original: "Fontany_1_Deutsche_Museum.jpg",
     title:
       "Из коллекции декоративной бумаги Феликса Хюбеля (Deutsche Museum Digital)",
   },
   {
     id: 383,
-    original: "Фонтаны_2_Deutsche_Museum.jpg",
+    original: "Fontany_2_Deutsche_Museum.jpg",
     title:
       "Из коллекции декоративной бумаги Феликса Хюбеля (Deutsche Museum Digital)",
   },
   {
     id: 384,
-    original: "Фонтаны_3_Deutsche_Museum.jpg",
+    original: "Fontany_3_Deutsche_Museum.jpg",
     title:
       "Из коллекции декоративной бумаги Феликса Хюбеля (Deutsche Museum Digital)",
   },
   {
     id: 385,
-    original: "Фонтаны_4_Deutsche_Museum.jpg",
+    original: "Fontany_4_Deutsche_Museum.jpg",
     title:
       "Из коллекции декоративной бумаги Феликса Хюбеля (Deutsche Museum Digital)",
   },
   {
     id: 386,
-    original: "Фонтаны_6_Иностранка.JPG",
+    original: "Fontany_6_Inostranka.JPG",
     title:
       "Из фондов Всероссийской государственной библиотеки иностранной литературы имени М. И. Рудомино",
   },
   {
     id: 387,
-    original: "Фонтаны_7_Иностранка.JPG",
+    original: "Fontany_7_Inostranka.JPG",
     title:
       "Из фондов Всероссийской государственной библиотеки иностранной литературы имени М. И. Рудомино",
   },
   {
     id: 388,
-    original: "Фонтаны_8_494_Некрасовка.jpg",
+    original: "Fontany_8_494_Nekrasovka.jpg",
     title:
       "Из коллекции «Декоративная бумага» библиотеки имени Н. А. Некрасова",
   },
   {
     id: 389,
-    original: "Волнистая_с_исп_короткого_гребня_8.jpg",
+    original: "Volnistaya_s_isp_korotkogo_grebnya_8.jpg",
     title:
       "Из фондов Государственной публичной научно-технической библиотеки Сибирского отделения РАН",
   },
   {
     id: 390,
-    original: "Волнистая_с_исп_короткого_гребня_9.jpg",
+    original: "Volnistaya_s_isp_korotkogo_grebnya_9.jpg",
     title:
       "Из фондов Государственной публичной научно-технической библиотеки Сибирского отделения РАН",
   },
   {
     id: 391,
-    original: "Волнистая_с_исп_короткого_гребня_10.jpg",
+    original: "Volnistaya_s_isp_korotkogo_grebnya_10.jpg",
     title:
       "Из фондов Государственной публичной научно-технической библиотеки Сибирского отделения РАН",
   },
   {
     id: 392,
-    original: "Тигровый_глаз_8.jpg",
+    original: "Tigrovyi_glaz_8.jpg",
     title: "Из фондов Национальной библиотеки Республики Саха (Якутия)",
   },
 ];
