@@ -1,18 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Liner from "../Liner";
 import {
   ArrowButtonLeft,
   ArrowButtonRight,
   BlockDescription,
   BlockHidden,
+  BlockMobileImages,
   BlockRectangularButton,
   BlockStyles,
   CloseButton,
-  ImageContainer,
-  Modal,
-  ImagesContainer,
   FullscreenWrapper,
-  BlockMobileImages,
+  ImageContainer,
+  ImagesContainer,
+  Modal,
 } from "./block.styles";
 import { OpredelitelContext } from "../../context";
 import Icon from "../Icon";
@@ -27,6 +27,7 @@ const Block = ({ block, id, isMobile }) => {
   const { refMap } = useContext(OpredelitelContext);
   const [currentIndex, setCurrentIndex] = useState(null);
   const [isImageIntersected, setImageIntersected] = useState(false);
+  const [isBlockOpen, setBlockOpen] = useState(false);
 
   const TOTAL_IMAGES = block.images.length;
 
@@ -46,8 +47,12 @@ const Block = ({ block, id, isMobile }) => {
   };
 
   const handlePaperSelectionToggle = () => {
-    const newPaperId = id === +blockId ? "" : id;
-    navigate(`/opredelitel/${newPaperId}`);
+    if (isBlockOpen) {
+      setBlockOpen(false);
+      navigate("/opredelitel/");
+    } else {
+      navigate(`/opredelitel/${id}`);
+    }
   };
 
   const handleLinkClick = (event) => {
@@ -57,6 +62,12 @@ const Block = ({ block, id, isMobile }) => {
       navigate(`/opredelitel/${lastSegment}`);
     }
   };
+
+  useEffect(() => {
+    if (+blockId === id) {
+      setBlockOpen(true);
+    }
+  }, [blockId, id]);
 
   return (
     <BlockStyles ref={(el) => (refMap.current[id] = el)}>
@@ -75,7 +86,7 @@ const Block = ({ block, id, isMobile }) => {
         {block.title}
       </BlockRectangularButton>
 
-      {+blockId === id && (
+      {isBlockOpen && (
         <BlockHidden>
           <BlockDescription>
             <div
