@@ -49,7 +49,7 @@ const Block = ({ block, id, isMobile }) => {
   const handlePaperSelectionToggle = () => {
     if (isBlockOpen) {
       setBlockOpen(false);
-      navigate("/opredelitel/");
+      if (+blockId === id) navigate("/opredelitel/");
     } else {
       navigate(`/opredelitel/${id}`);
     }
