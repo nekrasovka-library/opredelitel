@@ -22,15 +22,15 @@ const DescriptionStyles = styled.div`
 
 const DescriptionText = styled.div`
   > div {
-    line-height: 28px;
+    line-height: 31px;
     color: #000000;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 400;
     text-align: center;
   }
 
   @media (min-width: 641px) {
-    width: 745px;
+    width: 960px;
   }
 
   @media (max-width: 640px) {

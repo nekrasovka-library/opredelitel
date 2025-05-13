@@ -10,11 +10,15 @@ const HowStyles = styled.div`
 
   > div {
     &:first-child {
-      h3 {
-        color: #000000;
-        line-height: 1;
+      padding-top: 75px;
+      padding-bottom: 45px;
+
+      button {
         font-size: 26px;
-        cursor: pointer;
+        border-width: 1px;
+        height: 80px;
+        padding-left: 80px;
+        padding-right: 80px;
       }
     }
   }
