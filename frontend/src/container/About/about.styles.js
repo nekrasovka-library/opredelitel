@@ -87,7 +87,6 @@ const ListStyles = styled.div`
 
   @media (min-width: 641px) {
     column-gap: 40px;
-    max-height: 1200px;
   }
 
   @media (max-width: 640px) {
