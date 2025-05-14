@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const ResumeStyles = styled.div`
   display: flex;
-  padding: 60px 20px 75px;
+  padding: 80px 20px 75px;
   margin-top: 45px;
   border-top: 2px solid #000000;
   border-bottom: 2px solid #000000;
@@ -12,7 +12,6 @@ const ResumeStyles = styled.div`
     display: flex;
     gap: 40px;
     max-width: 1200px;
-    width: 100%;
     margin: 0 auto;
 
     > div {

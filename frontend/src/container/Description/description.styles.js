@@ -3,7 +3,7 @@ import styled from "styled-components";
 const DescriptionStyles = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 40px;
+  row-gap: 60px;
   align-items: center;
   width: 100%;
   border-bottom-color: #00000024;
