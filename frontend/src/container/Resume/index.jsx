@@ -40,7 +40,7 @@ const Resume = () => {
           —&nbsp;коллекции декоративной бумаги Феликса&nbsp;Хюбеля
           (Deutsche&nbsp;Museum&nbsp;Digital),
           <br />
-          —&nbsp;Научной библиотеки Исследовательского института Гетти (Getty—&nbsp;Research—&nbsp;Institute).
+          —&nbsp;Научной библиотеки Исследовательского института Гетти (Getty&nbsp;Research&nbsp;Institute).
         </div>
         <div>
           Благодарим за&nbsp;помощь и&nbsp;вдохновение участников круглого стола
