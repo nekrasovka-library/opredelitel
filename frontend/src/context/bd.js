@@ -2768,25 +2768,25 @@ const images = [
   },
   {
     id: 420,
-    original: "420.JPG", //http://cloud.nekrasovka.ru/index.php/f/737873
+    original: "420.jpg", //http://cloud.nekrasovka.ru/index.php/f/737873
     title:
       "Из фондов Всероссийской государственной библиотеки иностранной литературы имени М. И. Рудомино",
   },
   {
     id: 421,
-    original: "421.JPG", //http://cloud.nekrasovka.ru/index.php/f/737873
+    original: "421.jpg", //http://cloud.nekrasovka.ru/index.php/f/737873
     title:
       "Из фондов Всероссийской государственной библиотеки иностранной литературы имени М. И. Рудомино",
   },
   {
     id: 422,
-    original: "422.JPG", //http://cloud.nekrasovka.ru/index.php/f/737873
+    original: "422.jpg", //http://cloud.nekrasovka.ru/index.php/f/737873
     title:
       "Из фондов Научной библиотеки Исследовательского института Гетти (Getty Research Institute)",
   },
   {
     id: 423,
-    original: "423.JPG", //http://cloud.nekrasovka.ru/index.php/f/737873
+    original: "423.jpg", //http://cloud.nekrasovka.ru/index.php/f/737873
     title:
       "Из фондов Научной библиотеки Исследовательского института Гетти (Getty Research Institute)",
   },
